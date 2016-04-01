@@ -1,0 +1,72 @@
+@mixin transition ($property:all, $duration:0.05s, $timing:linear, $delay:0s) {
+  @if $property != none {
+    -webkit-transition: $property $duration $timing $delay;
+    -moz-transition: $property $duration $timing $delay;
+    -o-transition: $property $duration $timing $delay;
+    transition: $property $duration $timing $delay;
+  } @else {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+  }
+}
+
+@mixin drop-shadow ($xoffset:0px, $yoffset:1px, $blur:13px, $color:#050505, $radius:0px) {
+  -webkit-box-shadow: $xoffset $yoffset $blur $radius $color;
+  -moz-box-shadow: $xoffset $yoffset $blur $radius $color;
+  box-shadow: $xoffset $yoffset $blur $radius $color;
+}
+
+$link-blue:             #46B4DB;
+// greens
+$green_L5:              #87C45A;
+$green:                 #7DB951;
+$green_5:               #6FA646;
+$green_7:               #63933F;
+$green_10:              #408140;
+$green_15:              #305329;
+
+// oranges
+$orange_L5:             #FEA06B;
+$orange:                #F58E59;
+$orange_5:              #E77F4B;
+$orange_7:              #D56D44;
+$orange_10:             #A74D28;
+$orange_15:             #672612;
+
+// reds
+$red_L5:                #F22C68;
+$red:                   #E21954;
+$red_5:                 #CF114C;
+$red_7:                 #B40F42;
+$red_10:                #A71D3C;
+$red_15:                #450317;
+
+@mixin transition ($property:all, $duration:0.05s, $timing:linear, $delay:0s) {
+  @if $property != none {
+    -webkit-transition: $property $duration $timing $delay;
+    -moz-transition: $property $duration $timing $delay;
+    -o-transition: $property $duration $timing $delay;
+    transition: $property $duration $timing $delay;
+  } @else {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+  }
+}
+
+@mixin drop-shadow ($xoffset:0px, $yoffset:1px, $blur:2px, $color:#BBB, $radius:2px) {
+  -webkit-box-shadow: $xoffset $yoffset $blur $radius $color;
+  -moz-box-shadow: $xoffset $yoffset $blur $radius $color;
+  box-shadow: $xoffset $yoffset $blur $radius $color;
+}
+
+@mixin arrow($arrow-size:8px, $color:#097fc2){
+  border-left: ($arrow-size) solid transparent;
+  border-right: ($arrow-size) solid transparent;
+  border-top: $arrow-size*1.35 solid $color;
+  content: "";
+  display: block;
+}
