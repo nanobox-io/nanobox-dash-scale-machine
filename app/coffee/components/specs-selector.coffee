@@ -82,7 +82,7 @@ module.exports = class SpecsSelector
 
   duplicate : ($graph, spec) ->
     # Clone the spec graph
-    offset  = $graph.offset()
+    left    = $graph.position().left + 30
     $clone  = $graph.clone()
     $clone.addClass "cloned-graph"
 
@@ -93,15 +93,15 @@ module.exports = class SpecsSelector
       disk: spec.DISK.toLocaleString() + " GB"
     $specs = $ specHover( data )
     if $graph.position().left > 110
-      $specs.css left: -110
+      $specs.css left: -136
     else
-      $specs.css left: @graphWidth+5
+      $specs.css left: @graphWidth*2
 
     $clone.append $specs
     @$node.append $clone
     height = $(".heighter", $graph).height()
     $clone.css
-      left             : "#{ offset.left }px",
+      left             : "#{ left }px",
       bottom           : "#{ 109 }px",
       position         : "absolute"
       height           : height

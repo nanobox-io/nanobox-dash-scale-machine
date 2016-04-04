@@ -24,7 +24,7 @@ $ram-color :$darker-blue;
 $cpu-color :$darker-blue;
 $disk-color:$darker-blue;
 
-
+// I created these here : http://www.patternify.com/
 @mixin darkPattern { background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJElEQVQIW2NkgALm2lX/QUxGEAHj/G0OY2RE5oBVgARAMjCVAMSsEFeWG8OpAAAAAElFTkSuQmCC) repeat;}
 @mixin whitePattern{ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIElEQVQIW2NkgIL/QABiMoIIOIcRCJA5YBUgAZAETCUAWcwT/VWlrFcAAAAASUVORK5CYII=) repeat;}
 
@@ -85,19 +85,19 @@ $disk-color:$darker-blue;
   }
 }
 
-.graph-skin.spec               {
+.graph-skin.spec             {
   .disk                      { background:$disk-color; margin-top:3px;
     &.ebs                    { @include darkPattern; }
   }
   .cpu                       { background:$cpu-color; margin-top:3px; }
   .ram                       { background:$ram-color; }
   &.cloned-graph               {
-    .spec-hover              { font-weight:normal; position:absolute; bottom:-3px; color:white;  width: 110px;
-      > *                    { background:none !important; display:flex; align-items:center; margin-top:-4px; height: 15px;
+    .spec-hover              { font-weight:normal; position:absolute; bottom:-3px; color:white;  width: 140px;
+      > *                    { background:none !important; display:flex; align-items:center; margin-top:-4px; height: 18px;
         .label               { letter-spacing:0.07em; font-size:11px; color:#D3E9F2; width:33px; margin-right:6px; position:relative;
           &:after            { content:":"; position:absolute; right:0;  }
         }
-        .size                { font-size:14px; }
+        .size                { font-size:19px; margin-top:-3px; }
       }
     }
     &:after                  { @include arrow($arrow-size, white); left: 50%; margin: 0 0 0 (-$arrow-size); position: absolute; top: -12px; }
