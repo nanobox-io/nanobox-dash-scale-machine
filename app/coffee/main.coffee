@@ -1,11 +1,11 @@
 SpecsSelector = require 'components/specs-selector'
 class ScaleMachine
 
-  constructor: (@$el, @options) ->
-    @build()
+  constructor: (@$el, @options, onChangeCb) ->
+    @build onChangeCb
 
-  build : () ->
-    @specsSelector = new SpecsSelector()
+  build : (onChangeCb) ->
+    @specsSelector = new SpecsSelector onChangeCb
     @specsSelector.build @$el, @options
 
     # data  = { message: 'Live long and prosper.', source:'(See app/coffee/main.coffee)' }

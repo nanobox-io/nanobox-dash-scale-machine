@@ -1,17 +1,25 @@
 .specs-wrapper
   .spec-selector 
-    .info
-      .meta 
-        .title Instance Scale
-        .host Digital Ocean - Select a Scale Below
-      .vals
-        .ram 
-        .cpu 
-        .disk 
+    .instructions 
+      .main To scale this server, choose one of the following configurations:
+      .provider  Digital Ocean Server Info
     .specs
-      .key
+      .key(style="display:none")
         .ram-key RAM
         .cpu-key CPU
         .disk-key DISK
         if isAWS
           .ebs-key EBS
+  .info
+    .meta 
+      .title Instance Specs
+    .vals
+      .ram
+        .val
+        .metric
+      .cpu
+        .val
+        .metric
+      .disk 
+        .val
+        .metric

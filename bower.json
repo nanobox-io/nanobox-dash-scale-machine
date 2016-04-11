@@ -1,11 +1,12 @@
 {
   "name": "scale-machine",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "jquery": "*",
     "velocity": "~1.1.0",
     "shadow-icons": "tolmark12/shadow-icons-js",
-    "PubSubJS": "pubsub-js#^1.5.3"
+    "PubSubJS": "pubsub-js#^1.5.3",
+    "eventify": "sdomino/eventify"
   },
   "ignore": [
     "app",

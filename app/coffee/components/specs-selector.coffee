@@ -5,7 +5,7 @@ specHover     = require 'jade/spec-hover'
 
 module.exports = class SpecsSelector
 
-  constructor: () ->
+  constructor: ( @onChangeCb ) ->
 
   build : ($el, obj) ->
     @$node        = $ specsSelector( {isAWS:obj.data.meta.title == "AWS"} )
@@ -32,10 +32,9 @@ module.exports = class SpecsSelector
 
   buildGraph : ($el, spec, horizPadding) ->
     isEBS       = @checkForAlternateDisks spec
-    graphHeight = 130
     diskHeight  = Math.sqrt(spec.DISK) * 0.25  * @graphScale
     cpuHeight   = Math.sqrt(spec.CPU)  * 1.2   * @graphScale
-    ramHeight   = Math.sqrt(spec.RAM)  * 0.5   * @graphScale
+    ramHeight   = Math.sqrt(spec.RAM)  * 0.6   * @graphScale
     padding     = 3
     data        =
       isEBS        : isEBS
@@ -59,14 +58,22 @@ module.exports = class SpecsSelector
     $el.append $graph
 
   changeSelectedSpecs : (ram, cpu, disk) =>
-    @$ram.text  ram.toLocaleString()  + " GB"
-    @$cpu.text  cpu.toLocaleString()  + " CORE"
-    @$disk.text disk.toLocaleString() + " GB"
+    $('.val', @$ram).text  ram.toLocaleString()
+    $('.metric', @$ram).text  " GB RAM"
+
+    $('.val', @$cpu).text  cpu.toLocaleString()
+    $('.metric', @$cpu).text  " CPU CORE"
+
+    $('.val', @$disk).text disk.toLocaleString()
+    $('.metric', @$disk).text  " GB DISK"
+
 
   # ------------------------------------  Events
 
   onGraphClick : (spec, $graph) ->
+    @$clone.addClass "clicked"
     return if @activeSpecsId == spec.id
+    @onChangeCb spec.id
     @activeSpecsId = spec.id
 
     @changeSelectedSpecs spec.RAM, spec.CPU, spec.DISK
@@ -82,9 +89,9 @@ module.exports = class SpecsSelector
 
   duplicate : ($graph, spec) ->
     # Clone the spec graph
-    left    = $graph.position().left + 30
-    $clone  = $graph.clone()
-    $clone.addClass "cloned-graph"
+    left    = $graph.position().left
+    @$clone = $graph.clone()
+    @$clone.addClass "cloned-graph"
 
     # Hover item
     data =
@@ -92,17 +99,18 @@ module.exports = class SpecsSelector
       cpu:  spec.CPU.toLocaleString()  + " CORE"
       disk: spec.DISK.toLocaleString() + " GB"
     $specs = $ specHover( data )
-    if $graph.position().left > 110
-      $specs.css left: -136
+    xtraSpace = 8
+    if $graph.position().left > 420
+      $specs.css right: $graph.outerWidth() + xtraSpace
     else
-      $specs.css left: @graphWidth*2
+      $specs.css left: @graphWidth + xtraSpace
 
-    $clone.append $specs
-    @$node.append $clone
+    @$clone.append $specs
+    @$node.append @$clone
     height = $(".heighter", $graph).height()
-    $clone.css
+    @$clone.css
       left             : "#{ left }px",
-      bottom           : "#{ 109 }px",
+      bottom           : "#{ 145 }px",
       position         : "absolute"
       height           : height
       "pointer-events" : "none"
@@ -116,7 +124,7 @@ module.exports = class SpecsSelector
 
   setSpecWidthAndHeightScale : (data) ->
     totalSpecs  = 0
-    canvasWidth = 540
+    canvasWidth = 550
     canvasHeight = 130
     planPadding = 8
     specPadding = 2

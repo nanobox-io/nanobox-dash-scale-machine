@@ -8,7 +8,6 @@ module.exports = class ScaleDataShim
   getServiceSpecs : () =>
     info = @getCurrentSpecs()
     info.host = @provider
-    console.log "....."
     JSON.parse(JSON.stringify( {data:info} ));
 
   getHostOptions  : () => {data: @providers[@provider], activeSpecsId: @specId}

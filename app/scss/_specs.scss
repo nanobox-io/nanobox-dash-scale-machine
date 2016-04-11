@@ -1,110 +1,129 @@
-.spec-summary  { padding:30px 10px; display:flex; font-size:15px; color:#ADADAD; background:white; font-weight:normal; justify-content:space-between; align-items:center;
-  .specs       { display:flex; text-align:center;
-    .spec      { display:flex; flex-direction:column; padding:0 10px;
-      .val     { border-bottom:solid 1px #c9dce2; font-size:24px; color:#6C94A6; padding:0 19px; }
-      .kind    { }
-    }
-  }
-  .host        { font-size:11px; text-align:center; }
-  .configure   { width:50px; height:50px; background:#46B4DB;; }
-}
+.specs-wrapper                 { width:600px; height:355px; position:relative;
+  @import 'vars-and-utils';
 
-.specs-wrapper { width:600px; height:355px; position:relative; }
+  $background        : #029ADB;
+  $hover-bg          : #0093D2;
+  $blok-color        : #14AFF0;
+  $dark-border       : #1b97c4;
+  $dark-txt-color    : #0B5C8E;
+  $light-blok        : #9CE1FF;
 
-@import 'vars-and-utils';
+  $dark-border-color : rgba($dark-txt-color, 0.3);
+  $arrow-size        : 4px;
 
-$blue-bg     :#2BA6D2;
-$dark-blue   :#1B9FCE;
-$darker-blue :#037daa;
-$dark-border :#1b97c4;
-$arrow-size:4px;
 
-$ebs-color :$darker-blue;
-$ram-color :$darker-blue;
-$cpu-color :$darker-blue;
-$disk-color:$darker-blue;
+  $ebs-color  : $blok-color;
+  $ram-color  : $blok-color;
+  $cpu-color  : $blok-color;
+  $disk-color : $blok-color;
 
-// I created these here : http://www.patternify.com/
-@mixin darkPattern { background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJElEQVQIW2NkgALm2lX/QUxGEAHj/G0OY2RE5oBVgARAMjCVAMSsEFeWG8OpAAAAAElFTkSuQmCC) repeat;}
-@mixin whitePattern{ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIElEQVQIW2NkgIL/QABiMoIIOIcRCJA5YBUgAZAETCUAWcwT/VWlrFcAAAAASUVORK5CYII=) repeat;}
 
-.spec-selector               { height:315px; padding:20px 30px; background:$blue-bg; @include transition(all, 0.5s);
-  &:hover                    { background:$dark-blue;
-    .vals                    { opacity:0.6;  }
-  }
-  &.dirty:hover .vals        { opacity:1; }
-  .info                      { display:flex;  justify-content:space-between; align-items:top;
-    .meta                    { color:$darker-blue;
-      .title                 { font-size:20px; font-weight:normal; border-bottom:solid 1px $dark-border; padding-bottom:2px; }
-      .host                  { font-size:10px; padding-top:7px; }
-    }
-    .vals                    { @include transition(opacity, 0.3s); margin-left:-18px; text-transform:uppercase; display:flex; align-items:flex-start;
-      > *                    { margin-left:25px; font-size:20px; border-bottom:solid 1px $dark-border; text-align:center; color:white; font-weight:normal; padding:0 8px 2px; position:relative;
-        &:after              { top: 25px; color:$darker-blue; font-size:10px; position:absolute; left:50%; margin-left: -50%; width:100%; padding-top: 7px; }
-      }
-      .ram                   { &:after{ content:"RAM" } }
-      .cpu                   { &:after{ content:"CPU" } }
-      .disk                  { &:after{ content:"DISK"; } }
-    }
-  }
-  .specs                     { min-height:167px; display:flex; flex-direction:row; margin-top:50px; justify-content:flex-start; position:relative;
-    .key                     { font-size:11px; color:$darker-blue; position:absolute; left:0px; top:-30px;
-      > *                    { font-size:10px; height: 11px;
-        &:before             { content:""; display:inline-block; width:14px; height:6px; background:$darker-blue; margin-right:7px; }
-        &.ebs-key:before     { @include darkPattern; }
+  .spec-summary                { padding:30px 10px; display:flex; font-size:15px; color:#ADADAD; background:white; font-weight:normal; justify-content:space-between; align-items:center;
+    .specs                     { display:flex; text-align:center;
+      .spec                    { display:flex; flex-direction:column; padding:0 10px;
+        .val                   { border-bottom:solid 1px #c9dce2; font-size:24px; color:#6C94A6; padding:0 19px; }
+        .kind                  { }
       }
     }
-    &:hover                  {
-      .spec-kind .graph-skin   { opacity:0.23;
-        .heighter            {
-          &:after            { transform:scale(0.5) }
+    .host                      { font-size:11px; text-align:center; }
+    .configure                 { width:50px; height:50px; background:#46B4DB;; }
+  }
+
+
+  // I created these here : http://www.patternify.com/
+  @mixin darkPattern           { background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJElEQVQIW2NkgALm2lX/QUxGEAHj/G0OY2RE5oBVgARAMjCVAMSsEFeWG8OpAAAAAElFTkSuQmCC) repeat;}
+  @mixin whitePattern          { background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIElEQVQIW2NkgIL/QABiMoIIOIcRCJA5YBUgAZAETCUAWcwT/VWlrFcAAAAASUVORK5CYII=) repeat;}
+
+  // Top Instructions
+  .instructions                { color: $dark-txt-color; font-size:15px; font-style: italic; padding: 15px 20px;
+    .main                      { display:inline-block; border-bottom: $dark-border-color solid 1px; margin-bottom:5px; padding-bottom:2px;   }
+    .provider                  { color:white; font-size:12px; }
+  }
+
+  // Graphical Specs
+  .spec-selector               { padding:10px 0 20px; background:$background; @include transition(all, 0.5s);
+    &:hover                    { background:$hover-bg;
+      .vals                    { opacity:0.6;  }
+    }
+    &.dirty:hover .vals        { opacity:1; }
+    .specs                     { display:flex; flex-direction:row; justify-content:center; position:relative;
+      .key                     { font-size:11px; color:$blok-color; position:absolute; left:0px; top:-10px;
+        > *                    { font-size:10px; height: 11px;
+          &:before             { content:""; display:inline-block; width:14px; height:6px; background:$blok-color; margin-right:7px; }
+          &.ebs-key:before     { @include darkPattern; }
         }
-        &.selected           { opacity:0.1;
-          &:hover            {
+      }
+      &:hover                  {
+        .spec-kind .graph-skin { opacity:0.23;
+          .heighter            {
+            &:after            { transform:scale(0.5) }
+          }
+          &.selected           { opacity:0.1;
+            &:hover            {
+            }
           }
         }
       }
-    }
-    .spec-kind               {
-      .graphs-holder           { display:flex; }
-      .graph-skin              { @include transition(opacity, 0.14s); height:130px; position:relative;  cursor:pointer;
-        &:hover              {
-          .heighter          { }
-        }
-        &.selected .heighter { opacity:1;
-          > *                { background:white;
-            &.ebs            { @include whitePattern; }
+      .spec-kind               {
+        .graphs-holder         { display:flex; }
+        .graph-skin            { @include transition(opacity, 0.14s); height:130px; position:relative;  cursor:pointer;
+          &:hover              {
+            .heighter          { }
           }
-          &:after            { @include arrow($arrow-size, white); left: 50%; margin: 0 0 0 (-$arrow-size - 5); position: absolute; top: -12px; }
+          &.selected .heighter { opacity:1;
+            > *                { background:white;
+              &.ebs            { @include whitePattern; }
+            }
+            &:after            { @include arrow($arrow-size, white); left: 50%; margin: 0 0 0 (-$arrow-size - 5); position: absolute; top: -12px; }
+          }
+          .heighter            { position:absolute; bottom:0; left:0; padding-right: 10px; }
         }
-        .heighter            { position:absolute; bottom:0; left:0; padding-right: 10px; }
+        &:not(:last-child)     { margin-right:8px;}
+        .title                 { margin-top:4px; text-align:center; border-top:1px solid #109fd2; color:$dark-txt-color; font-size:11px; padding-top:10px;}
       }
-      &:not(:last-child)     { margin-right:8px;}
-      .title                 { margin-top:4px; text-align:center; border-top:1px solid #109fd2; color:$darker-blue; font-size:11px; padding-top:10px;}
     }
   }
-}
 
-.graph-skin.spec             {
-  .disk                      { background:$disk-color; margin-top:3px;
-    &.ebs                    { @include darkPattern; }
-  }
-  .cpu                       { background:$cpu-color; margin-top:3px; }
-  .ram                       { background:$ram-color; }
-  &.cloned-graph               {
-    .spec-hover              { font-weight:normal; position:absolute; bottom:-3px; color:white;  width: 140px;
-      > *                    { background:none !important; display:flex; align-items:center; margin-top:-4px; height: 18px;
-        .label               { letter-spacing:0.07em; font-size:11px; color:#D3E9F2; width:33px; margin-right:6px; position:relative;
-          &:after            { content:":"; position:absolute; right:0;  }
+  .graph-skin.spec             {
+    .disk                      { background:$disk-color; margin-top:3px;
+      &.ebs                    { @include darkPattern; }
+    }
+    .cpu                       { background:$cpu-color; margin-top:3px; }
+    .ram                       { background:$ram-color; }
+    &.cloned-graph             {
+      .spec-hover              { font-weight:normal; position:absolute; bottom:-3px; color:white;  ;
+        > *                    { background:none !important; display:flex; align-items:center; margin-top:-4px; height: 18px;
+          .label               { font-weight: $bold; letter-spacing:0.04em; font-size:11px; color:$light-blok; width:29px; margin-right:4px; position:relative;
+            &:after            { content:""; position:absolute; right:0;  }
+          }
+          .size                { font-size:19px; margin-top:-3px; white-space: nowrap;}
         }
-        .size                { font-size:19px; margin-top:-3px; }
+      }
+      &:after                  { @include arrow($arrow-size, white); left: 50%; margin: 0 0 0 (-$arrow-size); position: absolute; top: -12px; }
+      .disk, .cpu, .ram        { background:$light-blok; @include transition(background, 0.1s); }
+      .disk                    { margin-top:3px;
+        &.ebs                  { @include whitePattern; }
+      }
+      .cpu                     { margin-top:3px; }
+      .ram                     {  }
+      &.clicked                {
+        .disk, .cpu, .ram      { background:white; }
       }
     }
-    &:after                  { @include arrow($arrow-size, white); left: 50%; margin: 0 0 0 (-$arrow-size); position: absolute; top: -12px; }
-    .disk                    { background:white; margin-top:3px;
-      &.ebs                  { @include whitePattern; }
+  }
+
+  // ------------------------------------  INFO
+
+  .info                        { color:white; display:flex;  justify-content:space-between; align-items:center; background: $blok-color; height:65px; padding: 0 20px;
+    .meta                      {
+      .title                   { font-size:13px; font-weight:normal; text-transform: uppercase; font-weight: $bold; letter-spacing: 0.06em; }
+      .host                    { font-size:10px; padding-top:7px; }
     }
-    .cpu                     { background:white; margin-top:3px; }
-    .ram                     { background:white;  }
+    .vals                      { @include transition(opacity, 0.3s); margin-left:-18px; text-transform:uppercase; display:flex; align-items:flex-start;
+      > *                      { margin-left:10px; font-size:20px; color:white; font-weight:normal; padding:0 8px 2px; position:relative; display: flex;
+        .val                   { margin-right:5px; }
+        .metric                { color:#015478; }
+      }
+    }
   }
 }
