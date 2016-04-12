@@ -2,7 +2,9 @@ ScaleMachineDataShim = require './shims/data-shim'
 window.scaleMachineTestData = new ScaleMachineDataShim()
 
 window.init = ()=>
-  onChangeCb = (data)->
-    console.log data
+  onUserSelectNewServer = (data)->
+    console.log "The user has clicked this server id : `#{data}`"
 
-  app = new nanobox.ScaleMachine $(".holder"), scaleMachineTestData.getHostOptions(), onChangeCb
+  PubSub.subscribe 'STATS.GET_OPTIONS', (m, cb)-> cb scaleMachineTestData.getHostOptions()
+
+  app = new nanobox.ScaleMachine $(".holder"), scaleMachineTestData.getSampleScaleId(), onUserSelectNewServer

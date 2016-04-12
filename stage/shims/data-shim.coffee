@@ -2,8 +2,12 @@ module.exports = class ScaleDataShim
 
   constructor     : () ->
     providers = ["AWS","LINODE","DIGITAL_OCEAN","JOYENT"]
-    @provider = providers[0]
+    @provider = providers[2]
     @createHash()
+
+  getSampleScaleId : ()->
+    randomIndex = Math.floor(@providers[@provider].plans[0].specs.length * Math.random())
+    @providers[@provider].plans[0].specs[randomIndex].id
 
   getServiceSpecs : () =>
     info = @getCurrentSpecs()
@@ -34,7 +38,7 @@ module.exports = class ScaleDataShim
         plans:[
           {
             meta:
-              title:"Standard"
+              title:"Standard Configuration"
             specs:[
               {id:"a1", RAM:1, CPU:1, DISK:24}
               {id:"a2", RAM:2, CPU:2, DISK:48}

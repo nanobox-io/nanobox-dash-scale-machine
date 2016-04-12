@@ -114,8 +114,7 @@
 
   // ------------------------------------  INFO
 
-  .info                        { color:white; display:f
-    lex;  justify-content:space-between; align-items:center; background: $blok-color; height:65px; padding: 0 20px;
+  .info                        { color:white; display:flex;  justify-content:space-between; align-items:center; background: $blok-color; height:65px; padding: 0 20px;
     .meta                      {
       .title                   { font-size:13px; font-weight:normal; text-transform: uppercase; font-weight: $bold; letter-spacing: 0.06em; }
       .host                    { font-size:10px; padding-top:7px; }

@@ -5,15 +5,16 @@ specHover     = require 'jade/spec-hover'
 
 module.exports = class SpecsSelector
 
-  constructor: ( @onChangeCb ) ->
+  constructor: ( @$el, @onChangeCb, @activeSpecsId ) ->
+    PubSub.publish 'STATS.GET_OPTIONS', @build
 
-  build : ($el, obj) ->
+  build : (obj) =>
     @$node        = $ specsSelector( {isAWS:obj.data.meta.title == "AWS"} )
     @$ram         = $ ".ram", @$node
     @$cpu         = $ ".cpu", @$node
     @$disk        = $ ".disk", @$node
     @$specsHolder = $ ".specs", @$node
-    $el.append @$node
+    @$el.append @$node
 
     @setSpecWidthAndHeightScale obj.data
 
@@ -24,13 +25,14 @@ module.exports = class SpecsSelector
 
     @$graphs = $ ".graph-skin.spec", @$node
     # @valkrie.hookMachine.fireEvent 'get-service-specs'
+    @top = $('.specs', @$node).position().top
 
-  addPlanKind : ($el, plan) ->
+  addPlanKind : (@$el, plan) ->
     for spec, i in plan.specs
       horizPadding = if i < plan.specs.length then 2 else 0
-      @buildGraph $el, spec, horizPadding
+      @buildGraph @$el, spec, horizPadding
 
-  buildGraph : ($el, spec, horizPadding) ->
+  buildGraph : (@$el, spec, horizPadding) ->
     isEBS       = @checkForAlternateDisks spec
     diskHeight  = Math.sqrt(spec.DISK) * 0.25  * @graphScale
     cpuHeight   = Math.sqrt(spec.CPU)  * 1.2   * @graphScale
@@ -55,7 +57,10 @@ module.exports = class SpecsSelector
     $graph.on 'mouseover', ()=> @duplicate $graph, spec
     $graph.on 'mouseout',  ()=> @destroy()
     $graph.on 'click',     ()=> @onGraphClick spec, $graph
-    $el.append $graph
+    @$el.append $graph
+    if spec.id == @activeSpecsId
+      @onGraphClick spec, $graph, true
+
 
   changeSelectedSpecs : (ram, cpu, disk) =>
     $('.val', @$ram).text  ram.toLocaleString()
@@ -70,10 +75,12 @@ module.exports = class SpecsSelector
 
   # ------------------------------------  Events
 
-  onGraphClick : (spec, $graph) ->
-    @$clone.addClass "clicked"
-    return if @activeSpecsId == spec.id
-    @onChangeCb spec.id
+  onGraphClick : (spec, $graph, isInitialHighlight=false) ->
+    if !isInitialHighlight
+      return if @activeSpecsId == spec.id
+      @onChangeCb spec.id
+      @$clone.addClass "clicked"
+
     @activeSpecsId = spec.id
 
     @changeSelectedSpecs spec.RAM, spec.CPU, spec.DISK
@@ -90,6 +97,7 @@ module.exports = class SpecsSelector
   duplicate : ($graph, spec) ->
     # Clone the spec graph
     left    = $graph.position().left
+    top     =  @top
     @$clone = $graph.clone()
     @$clone.addClass "cloned-graph"
 
@@ -98,6 +106,7 @@ module.exports = class SpecsSelector
       ram:  spec.RAM.toLocaleString()  + " GB"
       cpu:  spec.CPU.toLocaleString()  + " CORE"
       disk: spec.DISK.toLocaleString() + " GB"
+
     $specs = $ specHover( data )
     xtraSpace = 8
     if $graph.position().left > 420
@@ -110,7 +119,7 @@ module.exports = class SpecsSelector
     height = $(".heighter", $graph).height()
     @$clone.css
       left             : "#{ left }px",
-      bottom           : "#{ 145 }px",
+      bottom           : "#{ @top+47 }px",
       position         : "absolute"
       height           : height
       "pointer-events" : "none"
