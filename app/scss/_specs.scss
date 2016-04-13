@@ -41,7 +41,7 @@
   }
 
   // Graphical Specs
-  .spec-selector               { padding:10px 0 20px; background:$background; @include transition(all, 0.5s);
+  .spec-selector               { padding:10px 0 20px; background:$background; @include transition(all, 0.5s); min-height:241px;
     &:hover                    { background:$hover-bg;
       .vals                    { opacity:0.6;  }
     }

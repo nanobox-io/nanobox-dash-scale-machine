@@ -7,15 +7,15 @@ module.exports = class SpecsSelector
 
   constructor: ( @$el, @onChangeCb, @activeSpecsId ) ->
     PubSub.publish 'STATS.GET_OPTIONS', @build
-
-  build : (obj) =>
-    @$node        = $ specsSelector( {isAWS:obj.data.meta.title == "AWS"} )
+    # @$node        = $ specsSelector( {isAWS:obj.data.meta.title == "AWS"} )
+    @$node        = $ specsSelector( {} )
     @$ram         = $ ".ram", @$node
     @$cpu         = $ ".cpu", @$node
     @$disk        = $ ".disk", @$node
     @$specsHolder = $ ".specs", @$node
     @$el.append @$node
 
+  build : (obj) =>
     @setSpecWidthAndHeightScale obj.data
 
     for plan in obj.data.plans
