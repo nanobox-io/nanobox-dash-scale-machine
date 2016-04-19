@@ -2,9 +2,10 @@ slider = require 'jade/slider'
 
 module.exports = class Slider
 
-  constructor: ($el, currentTotal=1) ->
+  constructor: ($el, onTotalChangeCb, currentTotal=1) ->
     @build($el)
     @updateTotal currentTotal
+    @cb =  onTotalChangeCb
 
   build : ($el)->
     $node = $ slider( {} )
@@ -51,3 +52,5 @@ module.exports = class Slider
     @$dragger.css left  : "#{ pos }px"
     @$track.css   width : pos
     @$totals.text total
+
+    if @cb then @cb total

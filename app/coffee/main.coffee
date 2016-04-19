@@ -3,12 +3,10 @@ Slider        = require 'components/slider'
 
 class ScaleMachine
 
-  constructor: (@$el, @activeServerId, onChangeCb) ->
-    @build onChangeCb
-
-  build : (onChangeCb) ->
-    @specsSelector = new SpecsSelector @$el, onChangeCb, @activeServerId
-    @slider        = new Slider @$el
+  constructor: (@$el, @activeServerId, onSpecsChange, onInscanceTotalChangeCb, totalInstances) ->
+    @specsSelector = new SpecsSelector @$el, onSpecsChange, @activeServerId
+    if onInscanceTotalChangeCb?
+      @slider = new Slider @$el, onInscanceTotalChangeCb, totalInstances
 
 window.nanobox ||= {}
 nanobox.ScaleMachine = ScaleMachine
