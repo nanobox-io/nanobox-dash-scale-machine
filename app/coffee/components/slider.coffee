@@ -14,11 +14,10 @@ module.exports = class Slider
 
     @$body      = $ 'body'
     @$dragger   = $ ".dragger", $node
-    $tracks     = $ ".tracks"
+    @$tracks     = $ ".tracks"
     @$track     = $ ".track"
     @$totals    = $ ".totals"
-    @leftOffset = $tracks.offset().left
-    @trackWidth = $tracks.width()
+    @trackWidth = @$tracks.width()
     @stepSize   = @trackWidth / steps
 
     # On Mousedown
@@ -26,7 +25,7 @@ module.exports = class Slider
 
       # Add drag listener
       @$body.on "mousemove", (e)=>
-        perc = (e.pageX - @leftOffset) / @trackWidth
+        perc = (e.pageX - @$tracks.offset().left) / @trackWidth
 
         # Must be a percentage between 0 and 1
         if perc > 1      then perc = 1

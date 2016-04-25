@@ -8,11 +8,12 @@ module.exports = class SpecsSelector
   constructor: ( @$el, @onChangeCb, @activeSpecsId ) ->
     PubSub.publish 'STATS.GET_OPTIONS', @build
     # @$node        = $ specsSelector( {isAWS:obj.data.meta.title == "AWS"} )
-    @$node        = $ specsSelector( {} )
-    @$ram         = $ ".ram", @$node
-    @$cpu         = $ ".cpu", @$node
-    @$disk        = $ ".disk", @$node
-    @$specsHolder = $ ".specs", @$node
+    @$node         = $ specsSelector( {} )
+    @$ram          = $ ".ram", @$node
+    @$cpu          = $ ".cpu", @$node
+    @$disk         = $ ".disk", @$node
+    @$specsHolder  = $ ".specs", @$node
+    @$specSelector = $ ".spec-selector", @$node
     @$el.append @$node
 
   build : (obj) =>
@@ -73,6 +74,8 @@ module.exports = class SpecsSelector
     $('.metric', @$disk).text  " GB DISK"
 
 
+  hideInstructions : () -> @$node.addClass 'no-instructions'
+
   # ------------------------------------  Events
 
   onGraphClick : (spec, $graph, isInitialHighlight=false) ->
@@ -114,12 +117,18 @@ module.exports = class SpecsSelector
     else
       $specs.css left: @graphWidth + xtraSpace
 
+    # top = $graph.attr 'data-height'
     @$clone.append $specs
-    @$node.append @$clone
+    @$specSelector.append @$clone
     height = $(".heighter", $graph).height()
+    # If this is already clicked / active..
+    if $graph.hasClass 'selected'
+      @$clone.addClass 'clicked'
+
     @$clone.css
       left             : "#{ left }px",
-      bottom           : "#{ @top+47 }px",
+      # top              : 162 - top
+      bottom           : 61
       position         : "absolute"
       height           : height
       "pointer-events" : "none"

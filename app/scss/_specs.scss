@@ -35,14 +35,17 @@
   @mixin whitePattern          { background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIElEQVQIW2NkgIL/QABiMoIIOIcRCJA5YBUgAZAETCUAWcwT/VWlrFcAAAAASUVORK5CYII=) repeat;}
 
   // Top Instructions
-  .instructions                { color: $dark-txt-color; font-size:15px; font-style: italic; padding: 15px 20px;
+  .instructions                { background:$background; color: $dark-txt-color; font-size:15px; font-style: italic; padding: 15px 20px;
     .main                      { display:inline-block; border-bottom: $dark-border-color solid 1px; margin-bottom:5px; padding-bottom:2px;   }
     .provider                  { color:white; font-size:12px; }
   }
+  &.no-instructions            {
+    .instructions              { display:none; }
+  }
 
   // Graphical Specs
-  .spec-selector               { padding:10px 0 20px; background:$background; @include transition(all, 0.5s); min-height:241px;
-    &:hover                    { background:$hover-bg;
+  .spec-selector               { padding:20px 0 20px; background:$background; @include transition(all, 0.5s); position:relative; 
+    &:hover                    { // background:$hover-bg;
       .vals                    { opacity:0.6;  }
     }
     &.dirty:hover .vals        { opacity:1; }
@@ -66,7 +69,7 @@
       }
       .spec-kind               {
         .graphs-holder         { display:flex; }
-        .graph-skin            { @include transition(opacity, 0.14s); height:130px; position:relative;  cursor:pointer;
+        .graph-skin            { @include transition(opacity, 0.14s); height:142px; position:relative;  cursor:pointer;
           &:hover              {
             .heighter          { }
           }

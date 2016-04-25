@@ -8,5 +8,8 @@ class ScaleMachine
     if onInscanceTotalChangeCb?
       @slider = new Slider @$el, onInscanceTotalChangeCb, totalInstances
 
+  hideInstructions : () ->
+    @specsSelector.hideInstructions()
+
 window.nanobox ||= {}
 nanobox.ScaleMachine = ScaleMachine
