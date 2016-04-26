@@ -17,6 +17,9 @@ module.exports = class SpecsSelector
     @$el.append @$node
 
   build : (obj) =>
+    if @activeSpecsId == 'default'
+      @activeSpecsId = obj.data.meta.default
+
     @setSpecWidthAndHeightScale obj.data
 
     for plan in obj.data.plans
@@ -113,7 +116,7 @@ module.exports = class SpecsSelector
     $specs = $ specHover( data )
     xtraSpace = 8
 
-    if @keepHoverInbounds && $graph.position().left > 420 
+    if @keepHoverInbounds && $graph.position().left > 420
       $specs.css right: $graph.outerWidth() + xtraSpace
     else
       $specs.css left: @graphWidth + xtraSpace

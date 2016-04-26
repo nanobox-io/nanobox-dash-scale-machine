@@ -35,6 +35,7 @@ module.exports = class ScaleDataShim
       LINODE:
         meta:
           title:"Linode"
+          default:"a1"
         plans:[
           {
             meta:
@@ -50,6 +51,7 @@ module.exports = class ScaleDataShim
       DIGITAL_OCEAN:
         meta:
           title:"Digital Ocean"
+          default:"b1"
         plans:[
           {
             meta:
@@ -80,6 +82,7 @@ module.exports = class ScaleDataShim
           {
             meta:
               title:"Standard"
+              default:"c1"
             specs:[
               {id:"c1", RAM:1, CPU:0.25, DISK:33}
               {id:"c2", RAM:1.75, CPU:1, DISK:56}
@@ -140,6 +143,7 @@ module.exports = class ScaleDataShim
       AWS:
         meta:
           title:"AWS"
+          default:"d1"
         plans:[
           {
             meta:

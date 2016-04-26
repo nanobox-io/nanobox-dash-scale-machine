@@ -14,6 +14,7 @@ class ScaleMachine
   keepHoverInbounds : () ->
     @specsSelector.keepHoverInbounds = true
 
+    
 
 window.nanobox ||= {}
 nanobox.ScaleMachine = ScaleMachine
