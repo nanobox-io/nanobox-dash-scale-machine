@@ -1,11 +1,11 @@
-.slider       { background:white; display:flex; padding:15px 20px; align-items: center; width:600px; box-sizing: border-box; position:relative;
+.slider       { background:none; display:flex; padding:15px 20px; align-items: center; width:600px; box-sizing: border-box; position:relative; user-select: none;
   $slide-blue:#029ADB;
-  .totals     { background:#EBEBEB; border-radius:50%; width:70px; height:70px; text-align:center; color:$slide-blue; font-size:42px; font-weight:$bold; line-height:72px;}
+  .totals     { background:#C0C8CC; border-radius:50%; width:70px; height:70px; text-align:center; color:white; font-size:42px; font-weight:$bold; line-height:72px;}
   .tracks     { height: 10px; width: 464px; position:relative; margin-left:20px;
     .track,
     .track-bg { height:100%; position:absolute;  }
     .track    { background: $slide-blue; }
-    .track-bg { background: #EBEBEB; width:100%;  }
+    .track-bg { background: white; width:100%;  }
   }
   $dragger-width : 27px;
   .dragger      { position:absolute;

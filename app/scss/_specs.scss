@@ -1,12 +1,15 @@
-.specs-wrapper                 { width:600px; position:relative;
+.specs-wrapper                 { width:600px; position:relative; user-select: none;
   @import 'vars-and-utils';
 
-  $background        : #029ADB;
+  $background        : none;
   $hover-bg          : #0093D2;
-  $blok-color        : #14AFF0;
+  $blok-color        : #C6CED2;
+  $blok-color-dark   : #9DB2BD;
   $dark-border       : #1b97c4;
   $dark-txt-color    : #0B5C8E;
-  $light-blok        : #9CE1FF;
+  $active-color      : #14A6E3;
+  $active-color-dark : #0097D6;
+  $light-blok        : $active-color;
 
   $dark-border-color : rgba($dark-txt-color, 0.3);
   $arrow-size        : 4px;
@@ -37,14 +40,14 @@
   // Top Instructions
   .instructions                { background:$background; color: $dark-txt-color; font-size:15px; font-style: italic; padding: 15px 20px;
     .main                      { display:inline-block; border-bottom: $dark-border-color solid 1px; margin-bottom:5px; padding-bottom:2px;   }
-    .provider                  { color:white; font-size:12px; }
+    .provider                  { color:$blok-color-dark; font-size:12px; }
   }
   &.no-instructions            {
     .instructions              { display:none; }
   }
 
   // Graphical Specs
-  .spec-selector               { padding:20px 0 20px; background:$background; @include transition(all, 0.5s); position:relative; 
+  .spec-selector               { padding:20px 0 20px; background:$background; @include transition(all, 0.5s); position:relative;
     &:hover                    { // background:$hover-bg;
       .vals                    { opacity:0.6;  }
     }
@@ -74,15 +77,15 @@
             .heighter          { }
           }
           &.selected .heighter { opacity:1;
-            > *                { background:white;
+            > *                { background:$active-color-dark;
               &.ebs            { @include whitePattern; }
             }
-            &:after            { @include arrow($arrow-size, white); left: 50%; margin: 0 0 0 (-$arrow-size - 5); position: absolute; top: -12px; }
+            &:after            { @include arrow($arrow-size, $active-color); left: 50%; margin: 0 0 0 (-$arrow-size - 5); position: absolute; top: -12px; }
           }
           .heighter            { position:absolute; bottom:0; left:0; padding-right: 10px; }
         }
         &:not(:last-child)     { margin-right:8px;}
-        .title                 { margin-top:4px; text-align:center; border-top:1px solid #109fd2; color:$dark-txt-color; font-size:11px; padding-top:10px;}
+        .title                 { margin-top:4px; text-align:center; border-top:1px solid $blok-color; color:$blok-color-dark; font-size:11px; padding-top:10px;}
       }
     }
   }
@@ -94,15 +97,15 @@
     .cpu                       { background:$cpu-color; margin-top:3px; }
     .ram                       { background:$ram-color; }
     &.cloned-graph             {
-      .spec-hover              { font-weight:normal; position:absolute; bottom:-3px; color:white;  ;
+      .spec-hover              { font-weight:normal; position:absolute; bottom:7px; color:$active-color-dark; background:rgba(white, 1); padding:15px 10px 5px;
         > *                    { background:none !important; display:flex; align-items:center; margin-top:-4px; height: 18px;
-          .label               { font-weight: $bold; letter-spacing:0.04em; font-size:11px; color:$light-blok; width:29px; margin-right:4px; position:relative;
+          .label               { font-weight: $bold; letter-spacing:0.04em; font-size:11px; color:$blok-color-dark; width:29px; margin-right:4px; position:relative;
             &:after            { content:""; position:absolute; right:0;  }
           }
           .size                { font-size:19px; margin-top:-3px; white-space: nowrap;}
         }
       }
-      &:after                  { @include arrow($arrow-size, white); left: 50%; margin: 0 0 0 (-$arrow-size); position: absolute; top: -12px; }
+      &:after                  { @include arrow($arrow-size, $active-color); left: 50%; margin: 0 0 0 (-$arrow-size); position: absolute; top: -12px; }
       .disk, .cpu, .ram        { background:$light-blok; @include transition(background, 0.1s); }
       .disk                    { margin-top:3px;
         &.ebs                  { @include whitePattern; }
@@ -110,22 +113,23 @@
       .cpu                     { margin-top:3px; }
       .ram                     {  }
       &.clicked                {
-        .disk, .cpu, .ram      { background:white; }
+        .disk, .cpu, .ram      { background:$active-color-dark; }
       }
     }
   }
 
   // ------------------------------------  INFO
 
-  .info                        { color:white; display:flex;  justify-content:space-between; align-items:center; background: $blok-color; height:65px; padding: 0 20px;
+  .info                        { color:$blok-color; display:flex;  justify-content:space-between; align-items:center; background: white; height:65px; padding: 0 20px;
     .meta                      {
       .title                   { font-size:13px; font-weight:normal; text-transform: uppercase; font-weight: $bold; letter-spacing: 0.06em; }
       .host                    { font-size:10px; padding-top:7px; }
     }
     .vals                      { @include transition(opacity, 0.3s); margin-left:-18px; text-transform:uppercase; display:flex; align-items:flex-start;
-      > *                      { margin-left:10px; font-size:20px; color:white; font-weight:normal; padding:0 8px 2px; position:relative; display: flex;
+      > *                      { border-right: solid 1px $blok-color; padding:0 10px; font-size:20px; color:$active-color; font-weight:normal; padding:1px 14px ; position:relative; display: flex;
         .val                   { margin-right:5px; }
-        .metric                { color:#015478; }
+        .metric                { color:$active-color; }
+        &:last-child           { padding-right:0; border-right:none;  }
       }
     }
   }
