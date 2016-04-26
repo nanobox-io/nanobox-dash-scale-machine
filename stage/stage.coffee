@@ -9,4 +9,4 @@ window.init = ()=>
 
   totalInstances = 5
   app = new nanobox.ScaleMachine $(".holder"), scaleMachineTestData.getSampleScaleId(), onUserSelectNewServer, onTotalInstancesChanged, totalInstances
-  app.hideInstructions()
+  # app.hideInstructions()
