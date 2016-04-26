@@ -11,5 +11,9 @@ class ScaleMachine
   hideInstructions : () ->
     @specsSelector.hideInstructions()
 
+  keepHoverInbounds : () ->
+    @specsSelector.keepHoverInbounds = true
+
+
 window.nanobox ||= {}
 nanobox.ScaleMachine = ScaleMachine

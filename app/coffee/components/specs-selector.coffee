@@ -113,11 +113,11 @@ module.exports = class SpecsSelector
     $specs = $ specHover( data )
     xtraSpace = 8
 
-    $specs.css left: @graphWidth + xtraSpace
-    # if $graph.position().left > 420
-      # $specs.css right: $graph.outerWidth() + xtraSpace
-    # else
-      # $specs.css left: @graphWidth + xtraSpace
+    if @keepHoverInbounds && $graph.position().left > 420 
+      $specs.css right: $graph.outerWidth() + xtraSpace
+    else
+      $specs.css left: @graphWidth + xtraSpace
+
 
     # top = $graph.attr 'data-height'
     @$clone.append $specs
