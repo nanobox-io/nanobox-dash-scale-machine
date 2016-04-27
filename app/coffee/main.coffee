@@ -23,5 +23,8 @@ class ScaleMachine
   refresh : (@activeServerId)->
     @specsSelector.refresh @activeServerId
 
+  getDefaultPlan : () ->
+    @specsSelector.serverSpecs.data.meta.default
+
 window.nanobox ||= {}
 nanobox.ScaleMachine = ScaleMachine
