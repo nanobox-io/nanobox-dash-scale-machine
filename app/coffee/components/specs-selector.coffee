@@ -16,13 +16,15 @@ module.exports = class SpecsSelector
     @$specSelector = $ ".spec-selector", @$node
     @$el.append @$node
 
-  build : (obj) =>
+  build : (@serverSpecs) =>
     if @activeSpecsId == 'default'
-      @activeSpecsId = obj.data.meta.default
+      @activeSpecsId = @serverSpecs.data.meta.default
 
-    @setSpecWidthAndHeightScale obj.data
-
-    for plan in obj.data.plans
+    @setSpecWidthAndHeightScale @serverSpecs.data
+    @growIncrament = 450/@serverSpecs.data.meta.totalPlans
+    @growTimeout   = 0
+    @totalGraphs   = 0
+    for plan in @serverSpecs.data.plans
       $kind = $ specKind( {title:@addBreaks(plan.meta.title)} )
       @$specsHolder.append $kind
       @addPlanKind $(".graphs-holder", $kind), plan
@@ -35,8 +37,39 @@ module.exports = class SpecsSelector
     for spec, i in plan.specs
       horizPadding = if i < plan.specs.length then 2 else 0
       @buildGraph @$el, spec, horizPadding
+      @growTimeout += @growIncrament
+
+  refresh : (@activeSpecsId) ->
+    @growTimeout = 300
+
+    for plan in @serverSpecs.data.plans
+      for spec, i in plan.specs
+        $ram  = $("##{spec.id} .ram",  @node)
+        $cpu  = $("##{spec.id} .cpu",  @node)
+        $disk = $("##{spec.id} .disk",  @node)
+
+        @animateBlock $ram, $cpu, $disk, $ram.height(), $cpu.height(), $disk.height(), @growTimeout+=@growIncrament
+        $("##{spec.id} .ram, .cpu, .disk", @$node).css height: 0
+
+
+    setTimeout ()=>
+      @activeSpecsId ||= @serverSpecs.data.meta.default
+      @$graphs?.removeClass "selected"
+      $("##{@activeSpecsId}", @$node).addClass "selected"
+    ,
+      300
+
+
+  animateBlock : ($ram, $cpu, $disk, ramHeight, cpuHeight, diskHeight, timeout)->
+    setTimeout ()->
+      $ram.css  height: ramHeight
+      $cpu.css  height: cpuHeight
+      $disk.css height: diskHeight
+    ,
+      @growTimeout
 
   buildGraph : (@$el, spec, horizPadding) ->
+    @totalGraphs++
     isEBS       = @checkForAlternateDisks spec
     diskHeight  = Math.sqrt(spec.DISK) * 0.25  * @graphScale
     cpuHeight   = Math.sqrt(spec.CPU)  * 1.2   * @graphScale
@@ -48,20 +81,20 @@ module.exports = class SpecsSelector
       graphHeight  : diskHeight+padding+cpuHeight+padding+ramHeight
       topPadding   : 0
       cellWidth    : @graphWidth
-      diskHeight   : diskHeight
-      cpuHeight    : cpuHeight
-      ramHeight    : ramHeight
+      diskHeight   : 0
+      cpuHeight    : 0
+      ramHeight    : 0
 
-    data.disk_y  = 0
-    data.cpu_y   = data.diskHeight + padding
-    data.ram_y   = data.cpu_y + padding + data.cpuHeight
     data.id      = spec.id
 
     $graph = $ specHtml( data )
     $graph.on 'mouseover', ()=> @duplicate $graph, spec
-    $graph.on 'mouseout',  ()=> @destroy()
+    $graph.on 'mouseout',  ()=> @destroyClonedGraph()
     $graph.on 'click',     ()=> @onGraphClick spec, $graph
     @$el.append $graph
+
+    @animateBlock $('.ram',  $graph), $('.cpu',  $graph), $('.disk',  $graph), ramHeight, cpuHeight, diskHeight, @growTimeout
+
     if spec.id == @activeSpecsId
       @onGraphClick spec, $graph, true
 
@@ -140,7 +173,7 @@ module.exports = class SpecsSelector
       "padding-right"  : "0"
       width            : "-=1"
 
-  destroy : ()->
+  destroyClonedGraph : ()->
     $(".cloned-graph").remove()
 
   # ------------------------------------ Helpers
@@ -182,3 +215,6 @@ module.exports = class SpecsSelector
       return true
 
   addBreaks : (str) -> str.replace(/\s/i, '<br/>');
+
+  destroy : () ->
+    @$node.remove()

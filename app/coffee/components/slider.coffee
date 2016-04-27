@@ -8,12 +8,12 @@ module.exports = class Slider
     @cb =  onTotalChangeCb
 
   build : ($el)->
-    $node = $ slider( {} )
-    $el.append $node
+    @$node = $ slider( {} )
+    $el.append @$node
     steps = 30
 
     @$body      = $ 'body'
-    @$dragger   = $ ".dragger", $node
+    @$dragger   = $ ".dragger", @$node
     @$tracks     = $ ".tracks"
     @$track     = $ ".track"
     @$totals    = $ ".totals"
@@ -53,3 +53,7 @@ module.exports = class Slider
     @$totals.text total
 
     if @cb then @cb total
+
+  destroy : () ->
+    @$dragger.off()
+    @$node.remove()

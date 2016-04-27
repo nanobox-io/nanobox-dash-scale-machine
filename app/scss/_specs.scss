@@ -1,6 +1,7 @@
 .specs-wrapper                 { width:600px; position:relative; user-select: none;
   @import 'vars-and-utils';
 
+  $easing : cubic-bezier(0.840, 0.005, 0.000, 1.000);
   $background        : none;
   $hover-bg          : #0093D2;
   $blok-color        : #C6CED2;
@@ -91,6 +92,7 @@
   }
 
   .graph-skin.spec             {
+    .disk, .cpu, .ram          { @include transition(height, 0.4s, $easing); height: 0;}
     .disk                      { background:$disk-color; margin-top:3px;
       &.ebs                    { @include darkPattern; }
     }

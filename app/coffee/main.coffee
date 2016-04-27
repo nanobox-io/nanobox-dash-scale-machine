@@ -14,7 +14,14 @@ class ScaleMachine
   keepHoverInbounds : () ->
     @specsSelector.keepHoverInbounds = true
 
-    
+  destroy : () ->
+    @specSelector.destroy()
+    @slider?.destroy()
+    @specSelector = null
+    @slider = null
+
+  refresh : (@activeServerId)->
+    @specsSelector.refresh @activeServerId
 
 window.nanobox ||= {}
 nanobox.ScaleMachine = ScaleMachine

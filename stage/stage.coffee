@@ -8,5 +8,5 @@ window.init = ()=>
   PubSub.subscribe 'STATS.GET_OPTIONS', (m, cb)-> cb scaleMachineTestData.getHostOptions()
 
   totalInstances = 5
-  app = new nanobox.ScaleMachine $(".holder"), scaleMachineTestData.getSampleScaleId(), onUserSelectNewServer, onTotalInstancesChanged, totalInstances
+  window.app = new nanobox.ScaleMachine $(".holder"), scaleMachineTestData.getSampleScaleId(), onUserSelectNewServer, onTotalInstancesChanged, totalInstances
   # app.hideInstructions()

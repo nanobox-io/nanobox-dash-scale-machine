@@ -36,6 +36,7 @@ module.exports = class ScaleDataShim
         meta:
           title:"Linode"
           default:"a1"
+          totalPlans:4
         plans:[
           {
             meta:
@@ -52,6 +53,7 @@ module.exports = class ScaleDataShim
         meta:
           title:"Digital Ocean"
           default:"b1"
+          totalPlans:9
         plans:[
           {
             meta:
@@ -78,6 +80,9 @@ module.exports = class ScaleDataShim
       JOYENT:
         meta:
           title:"Joyent"
+          default:"c1"
+          totalPlans:24
+
         plans:[
           {
             meta:
@@ -144,6 +149,7 @@ module.exports = class ScaleDataShim
         meta:
           title:"AWS"
           default:"d1"
+          totalPlans:38
         plans:[
           {
             meta:
