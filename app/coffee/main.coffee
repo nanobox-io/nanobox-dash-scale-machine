@@ -26,5 +26,8 @@ class ScaleMachine
   getDefaultPlan : () ->
     @specsSelector.serverSpecs.data.meta.default
 
+  getPlanData : (id) ->
+    @specsSelector.getPlanData id
+
 window.nanobox ||= {}
 nanobox.ScaleMachine = ScaleMachine

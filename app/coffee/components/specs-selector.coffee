@@ -39,35 +39,6 @@ module.exports = class SpecsSelector
       @buildGraph @$el, spec, horizPadding
       @growTimeout += @growIncrament
 
-  refresh : (@activeSpecsId) ->
-    @growTimeout = 300
-
-    for plan in @serverSpecs.data.plans
-      for spec, i in plan.specs
-        $ram  = $("##{spec.id} .ram",  @node)
-        $cpu  = $("##{spec.id} .cpu",  @node)
-        $disk = $("##{spec.id} .disk",  @node)
-
-        @animateBlock $ram, $cpu, $disk, $ram.height(), $cpu.height(), $disk.height(), @growTimeout+=@growIncrament
-        $("##{spec.id} .ram, .cpu, .disk", @$node).css height: 0
-
-
-    setTimeout ()=>
-      @activeSpecsId ||= @serverSpecs.data.meta.default
-      @$graphs?.removeClass "selected"
-      $("##{@activeSpecsId}", @$node).addClass "selected"
-    ,
-      300
-
-
-  animateBlock : ($ram, $cpu, $disk, ramHeight, cpuHeight, diskHeight, timeout)->
-    setTimeout ()->
-      $ram.css  height: ramHeight
-      $cpu.css  height: cpuHeight
-      $disk.css height: diskHeight
-    ,
-      @growTimeout
-
   buildGraph : (@$el, spec, horizPadding) ->
     @totalGraphs++
     isEBS       = @checkForAlternateDisks spec
@@ -98,6 +69,33 @@ module.exports = class SpecsSelector
     if spec.id == @activeSpecsId
       @onGraphClick spec, $graph, true
 
+  animateBlock : ($ram, $cpu, $disk, ramHeight, cpuHeight, diskHeight, timeout)->
+    setTimeout ()->
+      $ram.css  height: ramHeight
+      $cpu.css  height: cpuHeight
+      $disk.css height: diskHeight
+    ,
+      @growTimeout
+
+  refresh : (@activeSpecsId) ->
+    @growTimeout = 300
+
+    for plan in @serverSpecs.data.plans
+      for spec, i in plan.specs
+        $ram  = $("##{spec.id} .ram",  @node)
+        $cpu  = $("##{spec.id} .cpu",  @node)
+        $disk = $("##{spec.id} .disk",  @node)
+
+        @animateBlock $ram, $cpu, $disk, $ram.height(), $cpu.height(), $disk.height(), @growTimeout+=@growIncrament
+        $("##{spec.id} .ram, .cpu, .disk", @$node).css height: 0
+
+
+    setTimeout ()=>
+      @activeSpecsId ||= @serverSpecs.data.meta.default
+      @$graphs?.removeClass "selected"
+      $("##{@activeSpecsId}", @$node).addClass "selected"
+    ,
+      300
 
   changeSelectedSpecs : (ram, cpu, disk) =>
     $('.val', @$ram).text  ram.toLocaleString()
@@ -215,6 +213,12 @@ module.exports = class SpecsSelector
       return true
 
   addBreaks : (str) -> str.replace(/\s/i, '<br/>');
+
+  getPlanData : (id) ->
+    for plan in @serverSpecs.data.plans
+      for spec, i in plan.specs
+        if spec.id == id
+          return spec
 
   destroy : () ->
     @$node.remove()
