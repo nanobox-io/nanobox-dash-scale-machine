@@ -85,6 +85,13 @@ module.exports = class SpecsSelector
       @growTimeout = 10
       @growIncrament = 0
 
+    setTimeout ()=>
+      @activeSpecsId ||= @serverSpecs.data.meta.default
+      @$graphs?.removeClass "selected"
+      $("##{@activeSpecsId}", @$node).addClass "selected"
+    ,
+      @growTimeout
+
     for plan in @serverSpecs.data.plans
       for spec, i in plan.specs
         $ram  = $("##{spec.id} .ram",  @node)
@@ -94,12 +101,6 @@ module.exports = class SpecsSelector
         @animateBlock $ram, $cpu, $disk, $ram.height(), $cpu.height(), $disk.height(), @growTimeout+=@growIncrament
         $("##{spec.id} .ram, .cpu, .disk", @$node).css height: 0
 
-    setTimeout ()=>
-      @activeSpecsId ||= @serverSpecs.data.meta.default
-      @$graphs?.removeClass "selected"
-      $("##{@activeSpecsId}", @$node).addClass "selected"
-    ,
-      @growTimeout
 
   changeSelectedSpecs : (ram, cpu, disk) =>
     $('.val', @$ram).text  ram.toLocaleString()
