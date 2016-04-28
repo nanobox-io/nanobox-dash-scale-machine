@@ -92,7 +92,7 @@
   }
 
   .graph-skin.spec             {
-    .disk, .cpu, .ram          { @include transition(height, 0.4s, $easing); height: 0;}
+    .disk, .cpu, .ram          { @include transition(height, 0.25s, $easing); height: 0;}
     .disk                      { background:$disk-color; margin-top:3px;
       &.ebs                    { @include darkPattern; }
     }

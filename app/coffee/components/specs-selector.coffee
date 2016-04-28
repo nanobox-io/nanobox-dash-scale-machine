@@ -79,7 +79,8 @@ module.exports = class SpecsSelector
 
   refresh : (@activeSpecsId, doAnimate=true) ->
     if doAnimate
-      @growTimeout = 300
+      @growIncrament = 350/@serverSpecs.data.meta.totalPlans
+      @growTimeout = 250
     else
       @growTimeout = 10
       @growIncrament = 0
