@@ -20,8 +20,8 @@ class ScaleMachine
     @specSelector = null
     @slider = null
 
-  refresh : (@activeServerId)->
-    @specsSelector.refresh @activeServerId
+  refresh : (@activeServerId, doAnimate=true)->
+    @specsSelector.refresh @activeServerId, doAnimate
 
   getDefaultPlan : () ->
     @specsSelector.serverSpecs.data.meta.default
