@@ -56,6 +56,8 @@ module.exports = class SpecsSelector
       cpuHeight    : 0
       ramHeight    : 0
 
+
+
     data.id      = spec.id
 
     $graph = $ specHtml( data )
@@ -63,6 +65,10 @@ module.exports = class SpecsSelector
     $graph.on 'mouseout',  ()=> @destroyClonedGraph()
     $graph.on 'click',     ()=> @onGraphClick spec, $graph
     @$el.append $graph
+
+    $('.ram',  $graph).attr "data-height", ramHeight
+    $('.cpu',  $graph).attr "data-height", cpuHeight
+    $('.disk', $graph).attr "data-height", diskHeight
 
     @animateBlock $('.ram',  $graph), $('.cpu',  $graph), $('.disk',  $graph), ramHeight, cpuHeight, diskHeight, @growTimeout
 
@@ -98,7 +104,8 @@ module.exports = class SpecsSelector
         $cpu  = $("##{spec.id} .cpu",  @node)
         $disk = $("##{spec.id} .disk",  @node)
 
-        @animateBlock $ram, $cpu, $disk, $ram.height(), $cpu.height(), $disk.height(), @growTimeout+=@growIncrament
+        $ram.attr('data-height')
+        @animateBlock $ram, $cpu, $disk, Number($ram.attr('data-height')), Number($cpu.attr('data-height')), Number($disk.attr('data-height')), @growTimeout+=@growIncrament
         $("##{spec.id} .ram, .cpu, .disk", @$node).css height: 0
 
 
