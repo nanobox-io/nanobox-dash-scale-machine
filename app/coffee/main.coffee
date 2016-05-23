@@ -30,6 +30,9 @@ class ScaleMachine
   getDefaultPlan : () ->
     @specsSelector.serverSpecs.data.meta.default
 
+  getUserSelectedPlan : () ->
+    @specsSelector.activeSpecsId
+
   getPlanData : (id) ->
     @specsSelector.getPlanData id
 
