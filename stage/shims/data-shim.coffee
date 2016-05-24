@@ -4,6 +4,7 @@ module.exports = class ScaleDataShim
     providers = ["AWS","LINODE","DIGITAL_OCEAN","JOYENT"]
     @provider = providers[2]
     @createHash()
+    # console.log JSON.stringify(@providers[ providers[0] ])
 
   getSampleScaleId : ()->
     randomIndex = Math.floor(@providers[@provider].plans[0].specs.length * Math.random())
