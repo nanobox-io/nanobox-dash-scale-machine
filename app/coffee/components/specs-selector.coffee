@@ -17,13 +17,13 @@ module.exports = class SpecsSelector
 
   build : (@serverSpecs) =>
     if @activeSpecsId == 'default'
-      @activeSpecsId = @serverSpecs.data.meta.default
+      @activeSpecsId = @serverSpecs.meta.default
 
-    @setSpecWidthAndHeightScale @serverSpecs.data
-    @growIncrament = 450/@serverSpecs.data.meta.totalPlans
+    @setSpecWidthAndHeightScale @serverSpecs
+    @growIncrament = 450/@serverSpecs.meta.totalPlans
     @growTimeout   = 0
     @totalGraphs   = 0
-    for plan in @serverSpecs.data.plans
+    for plan in @serverSpecs.plans
       $kind = $ specKind( {title:@addBreaks(plan.meta.title)} )
       @$specsHolder.append $kind
       @addPlanKind $(".graphs-holder", $kind), plan
@@ -84,20 +84,20 @@ module.exports = class SpecsSelector
 
   refresh : (@activeSpecsId, doAnimate=true) ->
     if doAnimate
-      @growIncrament = 350/@serverSpecs.data.meta.totalPlans
+      @growIncrament = 350/@serverSpecs.meta.totalPlans
       @growTimeout = 250
     else
       @growTimeout = 10
       @growIncrament = 0
 
     setTimeout ()=>
-      @activeSpecsId ||= @serverSpecs.data.meta.default
+      @activeSpecsId ||= @serverSpecs.meta.default
       @$graphs?.removeClass "selected"
       $("##{@activeSpecsId}", @$node).addClass "selected"
     ,
       @growTimeout
 
-    for plan in @serverSpecs.data.plans
+    for plan in @serverSpecs.plans
       for spec, i in plan.specs
         $ram  = $("##{spec.id} .ram",  @node)
         $cpu  = $("##{spec.id} .cpu",  @node)
@@ -226,7 +226,7 @@ module.exports = class SpecsSelector
   addBreaks : (str) -> str.replace(/\s/i, '<br/>');
 
   getPlanData : (id) ->
-    for plan in @serverSpecs.data.plans
+    for plan in @serverSpecs.plans
       for spec, i in plan.specs
         if spec.id == id
           return spec
