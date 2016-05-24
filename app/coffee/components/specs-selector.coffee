@@ -6,8 +6,7 @@ specHover     = require 'jade/spec-hover'
 module.exports = class SpecsSelector
 
   constructor: ( @$el, @onChangeCb, @activeSpecsId ) ->
-    PubSub.publish 'STATS.GET_OPTIONS', @build
-    # @$node        = $ specsSelector( {isAWS:obj.data.meta.title == "AWS"} )
+    PubSub.publish 'SCALE.GET_OPTIONS', @build
     @$node         = $ specsSelector( {} )
     @$ram          = $ ".ram", @$node
     @$cpu          = $ ".cpu", @$node

@@ -15,7 +15,7 @@ module.exports = class ScaleDataShim
     info.host = @provider
     JSON.parse(JSON.stringify( {data:info} ));
 
-  getHostOptions  : () => {data: @providers[@provider], activeSpecsId: @specId}
+  getHostOptions  : () => {data: @providers[@provider]}
 
   getCurrentSpecs : () ->
     dict = LINODE:'a', DIGITAL_OCEAN:'b', JOYENT:'c', AWS:'d'
