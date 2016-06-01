@@ -176,7 +176,7 @@ module.exports = class SpecsSelector
     @$clone.css
       left             : "#{ left }px",
       # top              : 162 - top
-      bottom           : 48
+      bottom           : 47
       position         : "absolute"
       height           : height
       "pointer-events" : "none"
@@ -225,9 +225,11 @@ module.exports = class SpecsSelector
       return true
 
   convertMbToGb : (metric) ->
+    return if @serverSpecs.convertedMbToGb
+    @serverSpecs.convertedMbToGb = true
     for plan in @serverSpecs.plans
       for spec, i in plan.specs
-        spec[metric] = spec[metric]/1024
+        spec[metric] = spec[metric] / 1024
 
   addBreaks : (str) -> str.replace(/\s/i, '<br/>');
 
