@@ -16,6 +16,7 @@ module.exports = class SpecsSelector
     @$el.append @$node
 
   build : (@serverSpecs) =>
+    @convertMbToGb 'RAM', @serverSpecs
     if @activeSpecsId == 'default'
       @activeSpecsId = @serverSpecs.meta.default
 
@@ -175,7 +176,7 @@ module.exports = class SpecsSelector
     @$clone.css
       left             : "#{ left }px",
       # top              : 162 - top
-      bottom           : 61
+      bottom           : 48
       position         : "absolute"
       height           : height
       "pointer-events" : "none"
@@ -222,6 +223,11 @@ module.exports = class SpecsSelector
     if typeof spec.DISK != "number"
       spec.DISK = 1000
       return true
+
+  convertMbToGb : (metric) ->
+    for plan in @serverSpecs.plans
+      for spec, i in plan.specs
+        spec[metric] = spec[metric]/1024
 
   addBreaks : (str) -> str.replace(/\s/i, '<br/>');
 
