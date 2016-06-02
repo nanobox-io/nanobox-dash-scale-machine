@@ -33,13 +33,13 @@ module.exports = class SpecsSelector
     # @valkrie.hookMachine.fireEvent 'get-service-specs'
     @top = $('.specs', @$node).position().top
 
-  addPlanKind : (@$el, plan) ->
+  addPlanKind : ($el, plan) ->
     for spec, i in plan.specs
       horizPadding = if i < plan.specs.length then 2 else 0
-      @buildGraph @$el, spec, horizPadding
+      @buildGraph $el, spec, horizPadding
       @growTimeout += @growIncrament
 
-  buildGraph : (@$el, spec, horizPadding) ->
+  buildGraph : ($el, spec, horizPadding) ->
     @totalGraphs++
     isEBS       = @checkForAlternateDisks spec
     diskHeight  = Math.sqrt(spec.DISK) * 0.25  * @graphScale
@@ -64,7 +64,7 @@ module.exports = class SpecsSelector
     $graph.on 'mouseover', ()=> @duplicate $graph, spec
     $graph.on 'mouseout',  ()=> @destroyClonedGraph()
     $graph.on 'click',     ()=> @onGraphClick spec, $graph
-    @$el.append $graph
+    $el.append $graph
 
     $('.ram',  $graph).attr "data-height", ramHeight
     $('.cpu',  $graph).attr "data-height", cpuHeight
@@ -100,11 +100,10 @@ module.exports = class SpecsSelector
 
     for plan in @serverSpecs.plans
       for spec, i in plan.specs
-        $ram  = $("##{spec.id} .ram",  @node)
-        $cpu  = $("##{spec.id} .cpu",  @node)
-        $disk = $("##{spec.id} .disk",  @node)
+        $ram  = $("##{spec.id} .ram",  @$node)
+        $cpu  = $("##{spec.id} .cpu",  @$node)
+        $disk = $("##{spec.id} .disk",  @$node)
 
-        $ram.attr('data-height')
         @animateBlock $ram, $cpu, $disk, Number($ram.attr('data-height')), Number($cpu.attr('data-height')), Number($disk.attr('data-height')), @growTimeout+=@growIncrament
         $("##{spec.id} .ram, .cpu, .disk", @$node).css height: 0
 
