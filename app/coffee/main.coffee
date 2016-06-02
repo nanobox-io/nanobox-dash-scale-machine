@@ -10,21 +10,21 @@ class ScaleMachine
   destroy : () ->
     @scaleManager.destroy()
 
+  getUserSelectedPlan : () ->
+    @scaleManager.getSelectedPlans()
+
   #  Do I need to pass these API calls on to scaleManager.scaler ??  :
   hideInstructions : () ->
-    @specsSelector.hideInstructions()
+    @scaleManager.scaler.specsSelector.hideInstructions()
 
   keepHoverInbounds : () ->
-    @specsSelector.keepHoverInbounds = true
+    @scaleManager.scaler.specsSelector.keepHoverInbounds = true
 
   getDefaultPlan : () ->
-    @specsSelector.serverSpecs.data.meta.default
-
-  getUserSelectedPlan : () ->
-    @specsSelector.activeSpecsId
+    @scaleManager.scaler.specsSelector.serverSpecs.meta.default
 
   getPlanData : (id) ->
-    @specsSelector.getPlanData id
+    @scaleManager.scaler.specsSelector.getPlanData id
 
 window.nanobox ||= {}
 nanobox.ScaleMachine = ScaleMachine
