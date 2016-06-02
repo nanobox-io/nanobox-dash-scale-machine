@@ -3,10 +3,9 @@ Scaler       = require 'components/scaler'
 module.exports = class ScaleManager
 
   constructor: ($el, config) ->
-
+    window.manager = @
     @activeServerId          = config.activeServerId
-    @onSpecsChange           = config.onSpecsChange
-    @onInscanceTotalChangeCb = config.onInscanceTotalChangeCb
+    @onSpecsChangeCb         = config.onSpecsChange
     @totalInstances          = config.totalInstances
     @isCluster               = config.isCluster
     @isHorizontallyScalable  = config.isHorizontallyScalable
@@ -25,13 +24,13 @@ module.exports = class ScaleManager
       @memberData.monitor   = {}
 
     if @isHorizontallyScalable
-      @scaleMachine = new Scaler $scaleHolder, 'default', @onSelectionChange, @onInstanceTotalChange, 1
+      @scaler = new Scaler $scaleHolder, 'default', @onSelectionChange, true, 1
     else
-      @scaleMachine = new Scaler $scaleHolder, 'default', @onSelectionChange
+      @scaler = new Scaler $scaleHolder, 'default', @onSelectionChange
       @initMemberEvents()
 
-    @scaleMachine.hideInstructions()
-    @scaleMachine.keepHoverInbounds()
+    @scaler.hideInstructions()
+    @scaler.keepHoverInbounds()
     castShadows @$node
 
   initMemberEvents : () ->
@@ -45,7 +44,7 @@ module.exports = class ScaleManager
       if @activeMember == "secondary" && !@memberData.secondary.userHasSpecified
         @memberData.secondary.planId = @memberData.primary.planId
 
-      @scaleMachine.refresh @memberData[@activeMember].planId
+      @scaler.refresh @memberData[@activeMember].planId
 
   visuallyActivateMemberBtn : ($newBtn) ->
     @$members?.removeClass 'active'
@@ -54,10 +53,10 @@ module.exports = class ScaleManager
   onSelectionChange : (planId) =>
     if @isHorizontallyScalable || !@isCluster
       @memberData.primary.planId   = planId
-      @memberData.primary.planData = @scaleMachine.getPlanData planId
+      @memberData.primary.planData = @scaler.getPlanData planId
     else
       @memberData[@activeMember].planId   = planId
-      @memberData[@activeMember].planData = @scaleMachine.getPlanData planId
+      @memberData[@activeMember].planData = @scaler.getPlanData planId
       if @activeMember == 'primary' && !@memberData.secondary.userHasSpecified
         @memberData.secondary.planId   = @memberData.primary.planId
         @memberData.secondary.planData = @memberData.primary.planData
@@ -66,10 +65,11 @@ module.exports = class ScaleManager
       if @activeMember == 'secondary'
         @memberData.secondary.userHasSpecified = true
 
+    @onSpecsChangeCb @getSelectedPlans()
+
   onInstanceTotalChange : ( @totalInstances ) =>
 
   getSelectedPlans : () ->
-
     # This is a bunkhouse
     if !@isCluster
       @visuallyActivateMemberBtn $(".member[data-id='primary']")
@@ -86,18 +86,18 @@ module.exports = class ScaleManager
     # Make sure there is a plan for each member
     for key, member of @memberData
       if !member.planId?
-        member.planId   = @scaleMachine.getDefaultPlan()
-        member.planData = @scaleMachine.getPlanData member.planId
+        member.planId   = @scaler.getDefaultPlan()
+        member.planData = @scaler.getPlanData member.planId
 
     if @isHorizontallyScalable
-      @memberData.primary.totalInstances = @totalInstances
+      @memberData.primary.totalInstances = @scaler.slider.total
 
     return @memberData
 
   activate : () ->
     if !@isCluster
       @$node.addClass 'bunkhouse-topology'
-      @scaleMachine.refresh @memberData.primary.planId, false
+      @scaler.refresh @memberData.primary.planId, false
 
     else
       @$node.removeClass 'bunkhouse-topology'
@@ -105,4 +105,4 @@ module.exports = class ScaleManager
         if !@memberData.secondary?
           @memberData.secondary = {}
           @memberData.monitor   = {}
-        @scaleMachine.refresh @memberData[$('.member.active', @$node).attr 'data-id'].planId, false
+        @scaler.refresh @memberData[$('.member.active', @$node).attr 'data-id'].planId, false

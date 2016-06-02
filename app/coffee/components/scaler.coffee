@@ -4,7 +4,7 @@ scaler        = require 'jade/scaler'
 
 module.exports = class Scaler
 
-  constructor: (@$el, @activeServerId, @onSpecsChange, @onInscanceTotalChangeCb, @totalInstances) ->
+  constructor: (@$el, @activeServerId, @onSpecsChange, @isHorizScalable, @totalInstances) ->
     @build()
 
   build : () ->
@@ -12,8 +12,8 @@ module.exports = class Scaler
     @$el.append @$node
 
     @specsSelector = new SpecsSelector @$node, @onSpecsChange, @activeServerId
-    if @onInscanceTotalChangeCb?
-      @slider = new Slider @$node, @onInscanceTotalChangeCb, @totalInstances
+    if @isHorizScalable?
+      @slider = new Slider @$node, @onSpecsChange, @totalInstances
 
   hideInstructions : () ->
     @specsSelector.hideInstructions()
@@ -32,7 +32,7 @@ module.exports = class Scaler
     @specsSelector.refresh @activeServerId, doAnimate
 
   getDefaultPlan : () ->
-    @specsSelector.serverSpecs.data.meta.default
+    @specsSelector.serverSpecs.meta.default
 
   getUserSelectedPlan : () ->
     @specsSelector.activeSpecsId

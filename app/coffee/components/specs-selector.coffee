@@ -146,7 +146,7 @@ module.exports = class SpecsSelector
   duplicate : ($graph, spec) ->
     # Clone the spec graph
     left    = $graph.position().left
-    top     =  @top
+    # top     =  @top
     @$clone = $graph.clone()
     @$clone.addClass "cloned-graph"
 
@@ -168,7 +168,7 @@ module.exports = class SpecsSelector
     # top = $graph.attr 'data-height'
     @$clone.append $specs
     @$specSelector.append @$clone
-    height = $(".heighter", $graph).height()
+    # height = Number $graph.attr('data-height')
     # If this is already clicked / active..
     if $graph.hasClass 'selected'
       @$clone.addClass 'clicked'
@@ -178,10 +178,18 @@ module.exports = class SpecsSelector
       # top              : 162 - top
       bottom           : 47
       position         : "absolute"
-      height           : height
+      # height           : height
       "pointer-events" : "none"
       "padding-right"  : "0"
       width            : "-=1"
+
+    # If the graph was animating on rollover, the metrics that make up
+    # the graph are still too small, therefore, loop through the clone's
+    # metric blocks and manually set their height to full height
+    ar = [ $(".heighter .ram", @$clone), $(".heighter .cpu", @$clone), $(".heighter .disk", @$clone) ]
+    for $metric in ar
+      $metric.css height: Number($metric.attr("data-height"))
+
 
   destroyClonedGraph : ()->
     $(".cloned-graph").remove()
