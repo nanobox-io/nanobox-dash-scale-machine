@@ -100,8 +100,8 @@ module.exports = class SpecsSelector
 
     for plan in @serverSpecs.plans
       for spec, i in plan.specs
-        $ram  = $("##{spec.id} .ram",  @$node)
-        $cpu  = $("##{spec.id} .cpu",  @$node)
+        $ram  = $("##{spec.id} .ram",   @$node)
+        $cpu  = $("##{spec.id} .cpu",   @$node)
         $disk = $("##{spec.id} .disk",  @$node)
 
         @animateBlock $ram, $cpu, $disk, Number($ram.attr('data-height')), Number($cpu.attr('data-height')), Number($disk.attr('data-height')), @growTimeout+=@growIncrament
