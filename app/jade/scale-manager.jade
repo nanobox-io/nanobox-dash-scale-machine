@@ -1,0 +1,14 @@
+.scale-manager
+  .wrapper
+    if isRedundantDataCluster
+      .members
+        .member.active(data-id="primary")
+          img.shadow-icon(data-src="vertical-single")
+          .txt Primary
+        .member(data-id="secondary")
+          img.shadow-icon(data-src="vertical-single")
+          .txt Secondary
+        .member(data-id="monitor")
+          img.shadow-icon(data-src="monitor")
+          .txt Monitor
+    .scale-holder
