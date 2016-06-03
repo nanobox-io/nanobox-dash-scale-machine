@@ -26,6 +26,8 @@ module.exports = class ScaleManager
       @memberData.secondary = {}
       @memberData.monitor   = {}
 
+    console.log "scaleManager blud:"
+
     if @isHorizontallyScalable
       @scaler = new Scaler $scaleHolder, 'default', @onSelectionChange, true, 1
     else
