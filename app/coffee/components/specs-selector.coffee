@@ -7,6 +7,7 @@ module.exports = class SpecsSelector
 
   constructor: ( @$el, @onChangeCb, @activeSpecsId ) ->
     PubSub.publish 'SCALE.GET_OPTIONS', @build
+    console.log ">> getting options"
     @$node         = $ specsSelector( {} )
     @$ram          = $ ".ram", @$node
     @$cpu          = $ ".cpu", @$node
@@ -16,6 +17,7 @@ module.exports = class SpecsSelector
     @$el.append @$node
 
   build : (@serverSpecs) =>
+    console.log ">> building"
     @convertMbToGb 'RAM', @serverSpecs
     if @activeSpecsId == 'default'
       @activeSpecsId = @serverSpecs.meta.default
