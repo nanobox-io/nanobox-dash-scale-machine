@@ -6,7 +6,8 @@
     .slider            { display:none; }
     .members           { display:none; }
   }
-  .scale-holder        { padding:15px 0;  }
+  // .scale-holder        { padding:15px 0;  }
+  .scale-holder        { padding:0 0;  }
   .members             { display:flex; padding-left:30px; margin:15px 0 -20px 0;
     > *                { cursor:pointer; margin-right: 50px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
       &:hover          {
