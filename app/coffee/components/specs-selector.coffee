@@ -24,6 +24,7 @@ module.exports = class SpecsSelector
     @growIncrament = 450/@serverSpecs.meta.totalPlans
     @growTimeout   = 0
     @totalGraphs   = 0
+    console.log @serverSpecs
     for plan in @serverSpecs.plans
       $kind = $ specKind( {title:@addBreaks(plan.meta.title)} )
       @$specsHolder.append $kind
