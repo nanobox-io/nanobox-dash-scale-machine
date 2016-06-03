@@ -86,7 +86,7 @@
           .heighter            { position:absolute; bottom:0; left:0; padding-right: 10px; }
         }
         &:not(:last-child)     { margin-right:8px;}
-        .title                 { margin-top:4px; text-align:center; border-top:1px solid $blok-color; color:$blok-color-dark; font-size:11px; padding-top:10px;}
+        .title                 { min-height: 27px; margin-top:4px; text-align:center; border-top:1px solid $blok-color; color:$blok-color-dark; font-size:11px; padding-top:10px;}
       }
     }
   }

@@ -10,7 +10,8 @@ window.init = ()=>
 
   totalInstances = 5
   config =
-    activeServerId          : scaleMachineTestData.getSampleScaleId()
+    activeServerId          :
+      primary : scaleMachineTestData.getSampleScaleId()
     onSpecsChange           : onSpecsChange
     totalInstances          : totalInstances
     isHorizontallyScalable  : true
@@ -19,7 +20,10 @@ window.init = ()=>
   # window.app  = new nanobox.ScaleMachine $(".holder"), config
 
   config2 =
-    activeServerId          : scaleMachineTestData.getSampleScaleId()
+    activeServerId          :
+      primary   : scaleMachineTestData.getSampleScaleId()
+      secondary : scaleMachineTestData.getSampleScaleId()
+      monitor   : scaleMachineTestData.getSampleScaleId()
     onSpecsChange           : onSpecsChange
     totalInstances          : totalInstances
     isHorizontallyScalable  : false

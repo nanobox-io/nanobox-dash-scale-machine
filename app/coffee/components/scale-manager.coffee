@@ -3,10 +3,9 @@ Scaler       = require 'components/scaler'
 module.exports = class ScaleManager
 
   constructor: (@$el, config) ->
-    window.manager = @
-    @activeServerId   = config.activeServerId
-    @onSpecsChangeCb  = config.onSpecsChange
-    @totalInstances   = config.totalInstances
+    @activeServerIds = config.activeServerId
+    @onSpecsChangeCb = config.onSpecsChange
+    @totalInstances  = config.totalInstances
 
     @build config.isCluster, config.isHorizontallyScalable
 
@@ -19,17 +18,17 @@ module.exports = class ScaleManager
     @$el.append @$node
     $scaleHolder = $ '.scale-holder', @$node
 
-    @memberData = { primary : {} }
+    @memberData = { primary : {planId: @activeServerIds.primary} }
 
     # When a redundant data cluster, add holder for secondary db and monitor
     if @isRedundantData
-      @memberData.secondary = {}
-      @memberData.monitor   = {}
+      @memberData.secondary = {planId: @activeServerIds.secondary}
+      @memberData.monitor   = {planId: @activeServerIds.monitor}
 
     if @isHorizontallyScalable
-      @scaler = new Scaler $scaleHolder, 'default', @onSelectionChange, true, 1
+      @scaler = new Scaler $scaleHolder, @activeServerIds.primary, @onSelectionChange, true, 1
     else
-      @scaler = new Scaler $scaleHolder, 'default', @onSelectionChange
+      @scaler = new Scaler $scaleHolder, @activeServerIds.primary, @onSelectionChange
       @initMemberEvents()
 
     @scaler.hideInstructions()
@@ -51,6 +50,7 @@ module.exports = class ScaleManager
       if @activeMember == "secondary" && !@memberData.secondary.userHasSpecified
         @memberData.secondary.planId = @memberData.primary.planId
 
+      console.log @memberData[@activeMember]
       @scaler.refresh @memberData[@activeMember].planId
 
   visuallyActivateMemberBtn : ($newBtn) ->
