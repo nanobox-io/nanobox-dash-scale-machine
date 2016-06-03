@@ -6,7 +6,6 @@ specHover     = require 'jade/spec-hover'
 module.exports = class SpecsSelector
 
   constructor: ( @$el, @onChangeCb, @activeSpecsId ) ->
-    console.log "createing spec selector"
     PubSub.publish 'SCALE.GET_OPTIONS', @build
     @$node         = $ specsSelector( {} )
     @$ram          = $ ".ram", @$node
