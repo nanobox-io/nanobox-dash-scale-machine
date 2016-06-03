@@ -26,5 +26,8 @@ class ScaleMachine
   getPlanData : (id) ->
     @scaleManager.scaler.specsSelector.getPlanData id
 
+  refresh : (isCluster, isHorizontallyScalable) ->
+    @scaleManager.build isCluster, isHorizontallyScalable
+
 window.nanobox ||= {}
 nanobox.ScaleMachine = ScaleMachine

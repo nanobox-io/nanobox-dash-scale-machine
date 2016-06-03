@@ -2,18 +2,21 @@ scaleManager = require 'jade/scale-manager'
 Scaler       = require 'components/scaler'
 module.exports = class ScaleManager
 
-  constructor: ($el, config) ->
+  constructor: (@$el, config) ->
     window.manager = @
-    @activeServerId          = config.activeServerId
-    @onSpecsChangeCb         = config.onSpecsChange
-    @totalInstances          = config.totalInstances
-    @isCluster               = config.isCluster
-    @isHorizontallyScalable  = config.isHorizontallyScalable
+    @activeServerId   = config.activeServerId
+    @onSpecsChangeCb  = config.onSpecsChange
+    @totalInstances   = config.totalInstances
+
+    @build config.isCluster, config.isHorizontallyScalable
+
+  build : (@isCluster, @isHorizontallyScalable) ->
+    @destroyExisting()
     @isRedundantData         = @isCluster && !@isHorizontallyScalable
 
     @totalInstances = 1
     @$node = $ scaleManager( {isRedundantDataCluster: @isRedundantData} )
-    $el.append @$node
+    @$el.append @$node
     $scaleHolder = $ '.scale-holder', @$node
 
     @memberData = { primary : {} }
@@ -32,6 +35,10 @@ module.exports = class ScaleManager
     @scaler.hideInstructions()
     @scaler.keepHoverInbounds()
     castShadows @$node
+
+  destroyExisting : () ->
+    @scaler?.destroy()
+    @$node?.remove()
 
   initMemberEvents : () ->
     @$members     = $('.member', @$node)
@@ -93,16 +100,3 @@ module.exports = class ScaleManager
       @memberData.primary.totalInstances = @scaler.slider.total
 
     return @memberData
-
-  activate : () ->
-    if !@isCluster
-      @$node.addClass 'bunkhouse-topology'
-      @scaler.refresh @memberData.primary.planId, false
-
-    else
-      @$node.removeClass 'bunkhouse-topology'
-      if !@isHorizontallyScalable
-        if !@memberData.secondary?
-          @memberData.secondary = {}
-          @memberData.monitor   = {}
-        @scaler.refresh @memberData[$('.member.active', @$node).attr 'data-id'].planId, false

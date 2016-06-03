@@ -15,7 +15,7 @@ window.init = ()=>
     isHorizontallyScalable  : true
     isCluster               : true
 
-  window.app  = new nanobox.ScaleMachine $(".holder"), config
+  # window.app  = new nanobox.ScaleMachine $(".holder"), config
 
   config2 =
     activeServerId          : scaleMachineTestData.getSampleScaleId()

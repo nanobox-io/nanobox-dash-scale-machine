@@ -21,8 +21,8 @@ module.exports = class Scaler
   keepHoverInbounds : () ->
     @specsSelector.keepHoverInbounds = true
 
-  destroy : () ->
-    @specSelector.destroy()
+  destroy : () =>
+    @specSelector?.destroy()
     @slider?.destroy()
     @specSelector = null
     @slider = null
