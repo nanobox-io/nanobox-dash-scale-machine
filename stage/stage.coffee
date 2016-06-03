@@ -1,7 +1,6 @@
 ScaleMachineDataShim = require './shims/data-shim'
 window.scaleMachineTestData = new ScaleMachineDataShim()
 PubSub.subscribe 'SCALE.GET_OPTIONS', (m, cb)->
-  console.log "getting options..."
   cb scaleMachineTestData.getHostOptions()
 
 window.init = ()=>

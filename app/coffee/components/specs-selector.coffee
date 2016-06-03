@@ -16,7 +16,8 @@ module.exports = class SpecsSelector
     @$el.append @$node
 
   build : (@serverSpecs) =>
-    console.log "building..."
+    return if @isBuilt
+    @isBuilt = true
     @convertMbToGb 'RAM', @serverSpecs
     if @activeSpecsId == 'default'
       @activeSpecsId = @serverSpecs.meta.default
