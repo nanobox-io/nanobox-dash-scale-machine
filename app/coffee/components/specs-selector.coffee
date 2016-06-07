@@ -153,9 +153,15 @@ module.exports = class SpecsSelector
 
     # Hover item
     data =
-      ram:  spec.RAM.toLocaleString()  + " GB"
-      cpu:  spec.CPU.toLocaleString()  + " CORE"
-      disk: spec.DISK.toLocaleString() + " GB"
+      ram      : spec.RAM.toLocaleString()  + " GB"
+      cpu      : spec.CPU.toLocaleString()  + " CORE"
+      disk     : spec.DISK.toLocaleString() + " GB"
+      priceMo  : spec.dollarsPerMo
+      priceHr  : spec.dollarsPerHr
+      transfer : spec.transfer
+      provider : @serverSpecs.meta.title
+      # provider : "#{@serverSpecs.meta.title} #{@serverSpecs.meta.serverTitle}"
+
 
     $specs = $ specHover( data )
     xtraSpace = 8

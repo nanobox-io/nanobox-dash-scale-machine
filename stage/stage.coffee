@@ -17,7 +17,7 @@ window.init = ()=>
     isHorizontallyScalable  : true
     isCluster               : true
 
-  # window.app  = new nanobox.ScaleMachine $(".holder"), config
+  window.app  = new nanobox.ScaleMachine $(".holder"), config
 
   config2 =
     activeServerId          :
@@ -28,5 +28,5 @@ window.init = ()=>
     totalInstances          : totalInstances
     isHorizontallyScalable  : false
     isCluster               : true
-  window.app2 = new nanobox.ScaleMachine $(".holder"), config2
+  # window.app2 = new nanobox.ScaleMachine $(".holder"), config2
   # app.hideInstructions()
