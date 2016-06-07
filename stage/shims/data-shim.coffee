@@ -2,7 +2,7 @@ module.exports = class ScaleDataShim
 
   constructor     : () ->
     providers = ["AWS","LINODE","DIGITAL_OCEAN","JOYENT"]
-    @provider = providers[3]
+    @provider = providers[2]
     @createHash()
     # console.log JSON.stringify(@providers[ providers[0] ])
 
