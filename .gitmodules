@@ -1,3 +1,6 @@
 [submodule "libs/core-styles"]
 	path = libs/core-styles
 	url = git@github.com:nanobox-io/nanobox-dash-ui-core-styles.git
+[submodule "lib/assets/core-styles"]
+	path = lib/assets/core-styles
+	url = git@github.com:nanobox-io/nanobox-dash-ui-core-styles.git
