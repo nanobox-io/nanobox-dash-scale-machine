@@ -4,7 +4,7 @@
   $easing : cubic-bezier(0.840, 0.005, 0.000, 1.000);
   $background        : none;
   $hover-bg          : #0093D2;
-  $blok-color        : #C6CED2;
+  $blok-color        : #C5D1D7;
   $blok-color-dark   : #9DB2BD;
   $dark-border       : #1b97c4;
   $dark-txt-color    : #0B5C8E;
@@ -103,7 +103,7 @@
     &.cloned-graph             {
 
       // Provider Server Specs hover box
-      .spec-hover              { font-weight:normal; position:absolute; bottom:7px; color:$active-color-dark; background:rgba(white, 1); padding:8px 17px 5px; font-size:11px;
+      .spec-hover              { font-weight:normal; position:absolute; bottom:7px; color:$active-color-dark; background:rgba(white, 1); padding:8px 17px 5px; font-size:11px; z-index: 5;
         > *                    { border-bottom:1px solid #DDD; padding:5px 0; }
         .provider              { color:$dark-gray; font-style:italic; font-size:15px; white-space: nowrap}
         .specs                 { display: flex; flex-direction: column;
