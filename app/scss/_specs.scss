@@ -50,7 +50,7 @@
   }
 
   // Graphical Specs
-  .spec-selector               { padding:20px 0 20px; background:$background; @include transition(all, 0.5s); position:relative;
+  .spec-selector               { margin:20px 0 20px; background:$background; @include transition(all, 0.5s); position:relative;
     &:hover                    { // background:$hover-bg;
       .vals                    { opacity:0.6;  }
     }

@@ -183,7 +183,7 @@ module.exports = class SpecsSelector
     @$clone.css
       left             : "#{ left }px",
       # top              : 162 - top
-      bottom           : 63
+      bottom           : 41
       position         : "absolute"
       # height           : height
       "pointer-events" : "none"
