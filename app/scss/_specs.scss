@@ -120,8 +120,12 @@
           &:after              { content:"/mo"; font-size:14px; }
         }
       }
-      &:after                  { @include arrow($arrow-size, $active-color); left: 50%; margin: 0 0 0 (-$arrow-size); position: absolute; top: -12px; }
-      .disk, .cpu, .ram        { background:$light-blok; @include transition(background, 0.1s); }
+      .heighter                {
+        .disk, .cpu, .ram      { background:$light-blok; @include transition(background, 0.1s); }
+        .ram                   { position:relative;
+          &:after              { @include arrow($arrow-size, $active-color-dark); left: 50%; margin: 0 0 0 (-$arrow-size); position: absolute; padding-bottom:20px; top:-12px;  }
+        }
+      }
       .disk                    { margin-top:3px;
         &.ebs                  { @include whitePattern; }
       }
