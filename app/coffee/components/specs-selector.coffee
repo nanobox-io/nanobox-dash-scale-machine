@@ -175,15 +175,16 @@ module.exports = class SpecsSelector
     # top = $graph.attr 'data-height'
     @$clone.append $specs
     @$specSelector.append @$clone
-    # height = Number $graph.attr('data-height')
+    height = Number $graph.attr('data-height')
     # If this is already clicked / active..
     if $graph.hasClass 'selected'
       @$clone.addClass 'clicked'
 
+    console.log  @canvasHeight - Number $graph.attr('data-height')
     @$clone.css
+      "padding-top"    : @canvasHeight - Number $graph.attr('data-height')
       left             : "#{ left }px",
-      # top              : 162 - top
-      bottom           : 41
+      top              : "-10px"
       position         : "absolute"
       # height           : height
       "pointer-events" : "none"
@@ -204,20 +205,21 @@ module.exports = class SpecsSelector
   # ------------------------------------ Helpers
 
   setSpecWidthAndHeightScale : (data) ->
-    totalSpecs  = 0
-    canvasWidth = 550
-    canvasHeight = 130
-    planPadding = 8
-    specPadding = 2
-    spaceWidth  = 0 # How much of the available space will be filled by padding
-    spaceWidth  += planPadding * (data.plans.length-1)
-    biggest     = @findBiggestSpec data.plans
+    totalSpecs   = 0
+    canvasWidth  = 550
+    planPadding  = 8
+    specPadding  = 2
+    @canvasHeight = 150 + specPadding
+    spaceWidth   = 0 # How much of the available space will be filled by padding
+    spaceWidth   += planPadding * (data.plans.length-1)
+    biggest      = @findBiggestSpec data.plans
+    console.log biggest
     for plan in data.plans
       totalSpecs += plan.specs.length
       spaceWidth += specPadding * (plan.specs.length)
 
     @graphWidth     = (canvasWidth - spaceWidth)/totalSpecs
-    @graphScale     = canvasHeight/biggest
+    @graphScale     = @canvasHeight/(biggest+specPadding)
 
   findBiggestSpec : (plans) ->
     biggest     = 0
@@ -225,7 +227,6 @@ module.exports = class SpecsSelector
       for spec in plan.specs
         biggest = @getBiggest biggest, spec
     biggest
-
 
   getBiggest : (champion, spec) ->
     challenger  = Math.sqrt(spec.DISK) * 0.25
