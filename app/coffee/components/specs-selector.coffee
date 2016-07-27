@@ -22,6 +22,10 @@ module.exports = class SpecsSelector
     if @activeSpecsId == 'default'
       @activeSpecsId = @serverSpecs.meta.default
 
+    console.log "ACTIVE SPECS ID:"
+    console.log @activeSpecsId
+    console.log @serverSpecs
+
     @setSpecWidthAndHeightScale @serverSpecs
     @growIncrament = 450/@serverSpecs.meta.totalPlans
     @growTimeout   = 0
@@ -180,7 +184,6 @@ module.exports = class SpecsSelector
     if $graph.hasClass 'selected'
       @$clone.addClass 'clicked'
 
-    console.log  @canvasHeight - Number $graph.attr('data-height')
     @$clone.css
       "padding-top"    : @canvasHeight - Number $graph.attr('data-height')
       left             : "#{ left }px",
@@ -213,7 +216,6 @@ module.exports = class SpecsSelector
     spaceWidth   = 0 # How much of the available space will be filled by padding
     spaceWidth   += planPadding * (data.plans.length-1)
     biggest      = @findBiggestSpec data.plans
-    console.log biggest
     for plan in data.plans
       totalSpecs += plan.specs.length
       spaceWidth += specPadding * (plan.specs.length)
