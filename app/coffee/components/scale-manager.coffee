@@ -50,7 +50,6 @@ module.exports = class ScaleManager
       if @activeMember == "secondary" && !@memberData.secondary.userHasSpecified
         @memberData.secondary.planId = @memberData.primary.planId
 
-      console.log @memberData[@activeMember]
       @scaler.refresh @memberData[@activeMember].planId
 
   visuallyActivateMemberBtn : ($newBtn) ->

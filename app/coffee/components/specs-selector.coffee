@@ -22,10 +22,6 @@ module.exports = class SpecsSelector
     if @activeSpecsId == 'default'
       @activeSpecsId = @serverSpecs.meta.default
 
-    console.log "ACTIVE SPECS ID:"
-    console.log @activeSpecsId
-    console.log @serverSpecs
-
     @setSpecWidthAndHeightScale @serverSpecs
     @growIncrament = 450/@serverSpecs.meta.totalPlans
     @growTimeout   = 0
