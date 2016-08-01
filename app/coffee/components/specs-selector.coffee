@@ -19,6 +19,8 @@ module.exports = class SpecsSelector
     return if @isBuilt
     @isBuilt = true
     @convertMbToGb 'RAM', @serverSpecs
+    console.log 'ACTIVE SPECS ID'
+    console.log @activeSpecsId
     if @activeSpecsId == 'default'
       @activeSpecsId = @serverSpecs.meta.default
 
