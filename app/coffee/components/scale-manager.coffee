@@ -26,7 +26,7 @@ module.exports = class ScaleManager
       @memberData.monitor   = {planId: @activeServerIds.monitor}
 
     if @isHorizontallyScalable
-      @scaler = new Scaler $scaleHolder, @activeServerIds.primary, @onSelectionChange, true, 1
+      @scaler = new Scaler $scaleHolder, @activeServerIds.primary, @onSelectionChange, @onInstanceTotalChange, 1
     else
       @scaler = new Scaler $scaleHolder, @activeServerIds.primary, @onSelectionChange
       @initMemberEvents()
