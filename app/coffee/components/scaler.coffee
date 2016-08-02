@@ -13,7 +13,7 @@ module.exports = class Scaler
     @$el.append @$node
 
     @specsSelector = new SpecsSelector @$node, @onSpecsChange, @activeServerId
-    if @isHorizScalable?
+    if @isHorizScalable
       @slider = new Slider @$node, @onInstanceTotalChange, @totalInstances
 
   hideInstructions : () ->

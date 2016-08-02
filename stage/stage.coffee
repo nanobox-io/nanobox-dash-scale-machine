@@ -14,7 +14,7 @@ window.init = ()=>
       primary : scaleMachineTestData.getSampleScaleId()
     onSpecsChange           : onSpecsChange
     totalInstances          : totalInstances
-    isHorizontallyScalable  : true
+    isHorizontallyScalable  : false
     isCluster               : true
 
   window.app  = new nanobox.ScaleMachine $(".holder"), config
