@@ -3,9 +3,10 @@ Scaler       = require 'components/scaler'
 module.exports = class ScaleManager
 
   constructor: (@$el, config) ->
-    @activeServerIds = config.activeServerId
-    @onSpecsChangeCb = config.onSpecsChange
-    @totalInstances  = config.totalInstances
+    @activeServerIds         = config.activeServerId
+    @onSpecsChangeCb         = config.onSpecsChange
+    @onInscanceTotalChangeCb = config.onInscanceTotalChangeCb
+    @totalInstances          = config.totalInstances
 
     @build config.isCluster, config.isHorizontallyScalable
 
@@ -74,6 +75,8 @@ module.exports = class ScaleManager
     @onSpecsChangeCb @getSelectedPlans()
 
   onInstanceTotalChange : ( @totalInstances ) =>
+    if @onInscanceTotalChangeCb?
+      @onInscanceTotalChangeCb(@totalInstances)
 
   getSelectedPlans : () ->
     # This is a bunkhouse
