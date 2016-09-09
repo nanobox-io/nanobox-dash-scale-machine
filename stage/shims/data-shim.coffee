@@ -16,35 +16,7 @@ module.exports = class ScaleDataShim
     JSON.parse(JSON.stringify( {data:info} ));
 
   getHostOptions  : () =>
-    # return @getTEMP()
     @providers[@provider]
-
-  getTEMP : () ->
-    {
-      meta:
-        title:"DigitalOcean"
-        serverTitle:"droplet"
-        default:"512mb"
-        totalPlans:9
-      plans:[
-        {
-          meta:
-            title:"Standard"
-          specs:[
-            {id:"512mb","RAM":512,"CPU":1,"DISK":20,"transfer":1,"dollarsPerHr":0.00744,"dollarsPerMo":5}
-            {id:"1gb","RAM":1024,"CPU":1,"DISK":30,"transfer":2,"dollarsPerHr":0.01488,"dollarsPerMo":10}
-            {id:"2gb","RAM":2048,"CPU":2,"DISK":40,"transfer":3,"dollarsPerHr":0.02976,"dollarsPerMo":20}
-            {id:"4gb","RAM":4096,"CPU":2,"DISK":60,"transfer":4,"dollarsPerHr":0.05952,"dollarsPerMo":40}
-            {id:"8gb","RAM":8192,"CPU":4,"DISK":80,"transfer":5,"dollarsPerHr":0.11905,"dollarsPerMo":80}
-            {id:"16gb","RAM":16384,"CPU":8,"DISK":160,"transfer":6,"dollarsPerHr":0.2381,"dollarsPerMo":160}
-            {id:"32gb","RAM":32768,"CPU":12,"DISK":320,"transfer":7,"dollarsPerHr":0.47619,"dollarsPerMo":320}
-            {id:"48gb","RAM":49152,"CPU":16,"DISK":480,"transfer":8,"dollarsPerHr":0.71429,"dollarsPerMo":480}
-            {id:"64gb","RAM":65536,"CPU":20,"DISK":640,"transfer":9,"dollarsPerHr":0.95238,"dollarsPerMo":640}
-          ]
-        }
-      ]
-    }
-
 
   getCurrentSpecs : () ->
     dict = LINODE:'a', DIGITAL_OCEAN:'b', JOYENT:'c', AWS:'d'

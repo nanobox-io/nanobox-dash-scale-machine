@@ -26,6 +26,9 @@ class ScaleMachine
   getPlanData : (id) ->
     @scaleManager.scaler.specsSelector.getPlanData id
 
+  getProviderMetadata : () ->
+    @scaleManager.getProviderMetadata()
+
   refresh : (isCluster, isHorizontallyScalable) ->
     @scaleManager.build isCluster, isHorizontallyScalable
 

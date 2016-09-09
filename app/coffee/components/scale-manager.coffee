@@ -78,6 +78,9 @@ module.exports = class ScaleManager
     if @onInscanceTotalChangeCb?
       @onInscanceTotalChangeCb(@totalInstances)
 
+  getProviderMetadata : ()->
+    @scaler.specsSelector.serverSpecs.meta
+
   getSelectedPlans : () ->
     # This is a bunkhouse
     if !@isCluster
