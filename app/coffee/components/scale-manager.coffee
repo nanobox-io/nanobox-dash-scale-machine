@@ -14,7 +14,6 @@ module.exports = class ScaleManager
     @destroyExisting()
     @isRedundantData         = @isCluster && !@isHorizontallyScalable
 
-    @totalInstances = 1
     @$node = $ scaleManager( {isRedundantDataCluster: @isRedundantData} )
     @$el.append @$node
     $scaleHolder = $ '.scale-holder', @$node
@@ -27,7 +26,7 @@ module.exports = class ScaleManager
       @memberData.monitor   = {planId: @activeServerIds.monitor}
 
     if @isHorizontallyScalable
-      @scaler = new Scaler $scaleHolder, @activeServerIds.primary, @onSelectionChange, @onInstanceTotalChange, 1
+      @scaler = new Scaler $scaleHolder, @activeServerIds.primary, @onSelectionChange, @onInstanceTotalChange, @totalInstances
     else
       @scaler = new Scaler $scaleHolder, @activeServerIds.primary, @onSelectionChange
       @initMemberEvents()
