@@ -20,10 +20,10 @@ module.exports = class ScaleManager
 
     @memberData = { primary : {planId: @activeServerIds.primary} }
 
-    # When a redundant data cluster, add holder for secondary db and monitor
+    # When a redundant data cluster, add holder for secondary db and arbiter
     if @isRedundantData
       @memberData.secondary = {planId: @activeServerIds.secondary}
-      @memberData.monitor   = {planId: @activeServerIds.monitor}
+      @memberData.arbiter   = {planId: @activeServerIds.arbiter}
 
     if @isHorizontallyScalable
       @scaler = new Scaler $scaleHolder, @activeServerIds.primary, @onSelectionChange, @onInstanceTotalChange, @totalInstances
@@ -85,7 +85,7 @@ module.exports = class ScaleManager
     if !@isCluster
       @visuallyActivateMemberBtn $(".member[data-id='primary']")
       delete @memberData.secondary
-      delete @memberData.monitor
+      delete @memberData.arbiter
 
     # This is a db component..
     else if !@isHorizontallyScalable
