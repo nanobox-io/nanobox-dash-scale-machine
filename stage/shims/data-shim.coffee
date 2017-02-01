@@ -1,8 +1,8 @@
 module.exports = class ScaleDataShim
 
   constructor     : () ->
-    providers = ["AWS","LINODE","DIGITAL_OCEAN","JOYENT"]
-    @provider = providers[0]
+    providers = ["AWS_NEW","LINODE","DIGITAL_OCEAN","JOYENT"]
+    @provider = providers[2]
     @createHash()
     # console.log JSON.stringify(@providers[ providers[0] ])
 
@@ -33,7 +33,9 @@ module.exports = class ScaleDataShim
           }
 
   createHash : () ->
+    AWS_NEW = require './aws.json';
     @providers =
+      AWS_NEW: AWS_NEW
       LINODE:
         meta:
           title:"Linode"
@@ -52,7 +54,7 @@ module.exports = class ScaleDataShim
             ]
           }
         ]
-      DIGITAL_OCEAN:
+      DIGITAL_OCEAN_OLD:
         meta:
           title:"Digital Ocean"
           serverTitle:"Droplet"
@@ -78,6 +80,39 @@ module.exports = class ScaleDataShim
               {id:"b7", RAM:32768, CPU:12, DISK:320, dollarsPerHr:0.1, transfer:1, dollarsPerMo:10}
               {id:"b8", RAM:49152, CPU:16, DISK:480, dollarsPerHr:0.1, transfer:1, dollarsPerMo:10}
               {id:"b9", RAM:65536, CPU:20, DISK:640, dollarsPerHr:0.1, transfer:1, dollarsPerMo:10}
+            ]
+          }
+        ]
+      DIGITAL_OCEAN:
+        meta:
+          title: "DigitalOcean",
+          default: "512mb",
+          totalPlans: 14
+        plans: [
+          {
+            meta:
+              title: "Standard"
+            specs: [
+              {id: "512mb", RAM: 512, CPU: 1, DISK: 20, transfer: 1, dollarsPerHr: 0.00744, dollarsPerMo: 5 },
+              {id: "1gb", RAM: 1024, CPU: 1, DISK: 30, transfer: 2, dollarsPerHr: 0.01488, dollarsPerMo: 10},
+              {id: "2gb", RAM: 2048, CPU: 2, DISK: 40, transfer: 3, dollarsPerHr: 0.02976, dollarsPerMo: 20},
+              {id: "4gb", RAM: 4096, CPU: 2, DISK: 60, transfer: 4, dollarsPerHr: 0.05952, dollarsPerMo: 40},
+              {id: "8gb", RAM: 8192, CPU: 4, DISK: 80, transfer: 5, dollarsPerHr: 0.11905, dollarsPerMo: 80},
+              {id: "16gb", RAM: 16384, CPU: 8, DISK: 160, transfer: 6, dollarsPerHr: 0.2381, dollarsPerMo: 16},
+              {id: "32gb", RAM: 32768, CPU: 12, DISK: 320, transfer: 7, dollarsPerHr: 0.47619, dollarsPerMo: 32},
+              {id: "48gb", RAM: 49152, CPU: 16, DISK: 480, transfer: 8, dollarsPerHr: 0.71429, dollarsPerMo: 48},
+              {id: "64gb", RAM: 65536, CPU: 20, DISK: 640, transfer: 9, dollarsPerHr: 0.95238, dollarsPerMo: 640}
+            ]
+          },
+          {
+            meta:
+              title: "High Memory"
+            specs: [
+              {id: "m-16gb", RAM: 16384, CPU: 2, DISK: 30, transfer: 6, dollarsPerHr: 0.17857, dollarsPerMo: 12},
+              {id: "m-32gb", RAM: 32768, CPU: 4, DISK: 90, transfer: 7, dollarsPerHr: 0.35714, dollarsPerMo: 24},
+              {id: "m-64gb", RAM: 65536, CPU: 8, DISK: 200, transfer: 8, dollarsPerHr: 0.71429, dollarsPerMo: 48},
+              {id: "m-128gb", RAM: 131072, CPU: 16, DISK: 340, transfer: 9, dollarsPerHr: 1.42857, dollarsPerMo: 96},
+              {id: "m-224gb", RAM: 229376, CPU: 32, DISK: 500, transfer: 10, dollarsPerHr: 2.5, dollarsPerMo: 1680}
             ]
           }
         ]

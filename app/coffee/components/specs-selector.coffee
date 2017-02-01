@@ -16,6 +16,7 @@ module.exports = class SpecsSelector
     @$el.append @$node
 
   build : (@serverSpecs) =>
+    console.log @serverSpecs
     return if @isBuilt
     @isBuilt = true
     @convertMbToGb 'RAM', @serverSpecs

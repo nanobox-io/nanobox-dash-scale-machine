@@ -15,7 +15,7 @@ window.init = ()=>
     onSpecsChange           : onSpecsChange
     totalInstances          : totalInstances
     isHorizontallyScalable  : false
-    isCluster               : true
+    isCluster               : false
 
   window.app  = new nanobox.ScaleMachine $(".holder"), config
 
