@@ -11,11 +11,11 @@ module.exports = class Slider
   build : ()=>
     @cleanUpExistingBuild()
     @$node = $ slider( {} )
-    @$doubler = $ "#doubler-btn", @$node
-    @$doubler.on 'click', @doubleIt
+    $("#doubler-btn", @$node).on 'click', @doubleIt
+    $("#nope-btn", @$node).on 'click', @hideDoubler
     @$el.append @$node
 
-    @$body      = $ 'body'
+    @$body      = $ 'html, body'
     @$dragger   = $ ".dragger", @$node
     @$tracks     = $ ".tracks"
     @$track     = $ ".track"
@@ -39,7 +39,7 @@ module.exports = class Slider
         # Don't allow 0
         if total < 1 then total = 1
 
-        if perc == 1 && total < 1000
+        if perc == 1 && total < 5000
           @showDoubler()
 
         @updateTotal total
@@ -80,11 +80,11 @@ module.exports = class Slider
       @$node.addClass 'five'
 
   doubleIt : () =>
-    @$node.removeClass 'show-doubler'
+    @hideDoubler()
     @total = 0
     @steps *= 2
     @build()
     @updateTotal(@steps/2)
 
-  showDoubler : () ->
-    @$node.addClass 'show-doubler'
+  showDoubler : () => @$node.addClass 'show-doubler'
+  hideDoubler : () => @$node.removeClass 'show-doubler'
