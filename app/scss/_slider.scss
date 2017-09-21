@@ -1,4 +1,4 @@
-.slider       { background:none; display:flex; padding:15px 20px; align-items: center; width:600px; box-sizing: border-box; position:relative; user-select: none;
+.slider       { background:none; display:flex; padding:15px 20px; align-items: center; width:600px; box-sizing: border-box; position:relative; user-select: none; position: relative;
   $slide-blue:#029ADB;
   .totals     { background:#C0C8CC; border-radius:50%; width:70px; height:70px; text-align:center; color:white; font-size:42px; font-weight:$bold; line-height:72px;}
   .tracks     { height: 10px; width: 464px; position:relative; margin-left:20px;
@@ -15,5 +15,23 @@
         &:after { bottom: 100%; left: 50%;border: solid transparent;content: ""; height: 0;width: 0;position: absolute;pointer-events: none;border-color: rgba(136, 183, 213, 0); border-bottom-color: $slide-blue; border-width: $dragger-width/2;  }
       }
     }
+  }
+  .doubler      {position: absolute; left:100%; background: white; padding:10px; display: flex; align-items: center; flex-direction: column; display:none;
+    .txt        {white-space: nowrap; color:#9DB2BD; margin-bottom:8px; }
+    .btn        {background: #0E9ED7; color:white; text-transform: uppercase; letter-spacing: 0.06em; padding:4px 8px; font-size:12px; cursor:pointer;
+      &:hover   {background: #006BB8; }
+    }
+  }
+  &.show-doubler{
+    .doubler    {display:flex; }
+  }
+  &.three{
+    .totals{font-size:34px;}
+  }
+  &.four{
+    .totals{font-size:28px;}
+  }
+  &.five{
+    .totals{font-size:24px;}
   }
 }

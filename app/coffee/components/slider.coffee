@@ -2,15 +2,18 @@ slider = require 'jade/slider'
 
 module.exports = class Slider
 
-  constructor: ($el, onTotalChangeCb, currentTotal=1) ->
-    @build($el)
+  constructor: (@$el, onTotalChangeCb, currentTotal=1) ->
+    @steps=30
+    @build()
     @updateTotal currentTotal
     @cb =  onTotalChangeCb
 
-  build : ($el)->
+  build : ()=>
+    @cleanUpExistingBuild()
     @$node = $ slider( {} )
-    $el.append @$node
-    steps = 30
+    @$doubler = $ "#doubler-btn", @$node
+    @$doubler.on 'click', @doubleIt
+    @$el.append @$node
 
     @$body      = $ 'body'
     @$dragger   = $ ".dragger", @$node
@@ -18,7 +21,7 @@ module.exports = class Slider
     @$track     = $ ".track"
     @$totals    = $ ".totals"
     @trackWidth = @$tracks.width()
-    @stepSize   = @trackWidth / steps
+    @stepSize   = @trackWidth / @steps
 
     # On Mousedown
     @$dragger.on "mousedown", ()=>
@@ -36,6 +39,9 @@ module.exports = class Slider
         # Don't allow 0
         if total < 1 then total = 1
 
+        if perc == 1 && total < 1000
+          @showDoubler()
+
         @updateTotal total
 
       # Remove Events on release
@@ -47,6 +53,7 @@ module.exports = class Slider
     if total == @total then return
     @total = total
 
+    @updateWidth(total)
     pos = total * @stepSize
     @$dragger.css left  : "#{ pos }px"
     @$track.css   width : pos
@@ -54,6 +61,30 @@ module.exports = class Slider
 
     if @cb then @cb total
 
+  cleanUpExistingBuild : () ->
+    if @$node?
+      @$node.remove()
+
   destroy : () ->
     @$dragger.off()
     @$node.remove()
+
+  updateWidth : (total)->
+    digits = String(total).length
+    @$node.removeClass "three four five"
+    if digits == 3
+      @$node.addClass 'three'
+    else if digits == 4
+      @$node.addClass 'four'
+    else if digits > 4
+      @$node.addClass 'five'
+
+  doubleIt : () =>
+    @$node.removeClass 'show-doubler'
+    @total = 0
+    @steps *= 2
+    @build()
+    @updateTotal(@steps/2)
+
+  showDoubler : () ->
+    @$node.addClass 'show-doubler'
