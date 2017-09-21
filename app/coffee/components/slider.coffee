@@ -4,6 +4,11 @@ module.exports = class Slider
 
   constructor: (@$el, onTotalChangeCb, currentTotal=1) ->
     @steps=30
+
+    # If current Total is greater than steps, round steps to nearest 10 + to
+    if currentTotal > @steps
+      @steps = (Math.round(currentTotal / 10) * 10) + 10
+
     @build()
     @updateTotal currentTotal
     @cb =  onTotalChangeCb

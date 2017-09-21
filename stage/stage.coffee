@@ -8,7 +8,7 @@ window.init = ()=>
     console.log "The user has selected :"
     console.log data
 
-  totalInstances = 5
+  totalInstances = 320
   config =
     activeServerId          :
       primary : scaleMachineTestData.getSampleScaleId()
